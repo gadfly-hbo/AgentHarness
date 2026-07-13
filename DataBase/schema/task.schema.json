@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentharness.local/schema/task.schema.json",
+  "title": "Task",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "title",
+    "status",
+    "created_at",
+    "requester"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^task_[a-zA-Z0-9_-]+$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "ready",
+        "running",
+        "blocked",
+        "completed",
+        "cancelled"
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "normal",
+        "high",
+        "urgent"
+      ],
+      "default": "normal"
+    },
+    "requester": {
+      "type": "string",
+      "minLength": 1
+    },
+    "assignee": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Project, workspace, product, or domain boundary for this task."
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

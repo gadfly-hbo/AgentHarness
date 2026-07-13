@@ -1,0 +1,5 @@
+AgentHarness Phase 1 sample artifact
+
+Task: task_20260713041016_e6d47542
+Run: run_20260713041016_26193e53
+Outcome: the file JSONL governance loop can produce durable records.

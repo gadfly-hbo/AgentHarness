@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentharness.local/schema/event.schema.json",
+  "title": "RunEvent",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "run_id",
+    "type",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^event_[a-zA-Z0-9_-]+$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^run_[a-zA-Z0-9_-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "agent.started",
+        "agent.message",
+        "tool.called",
+        "tool.result",
+        "file.changed",
+        "decision.recorded",
+        "artifact.created",
+        "memory.candidate_created",
+        "run.blocked",
+        "run.completed",
+        "run.failed"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "actor": {
+      "type": "string"
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

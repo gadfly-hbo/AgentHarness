@@ -1,0 +1,4 @@
+{"id":"event_20260713041016_a61ce3ed","run_id":"run_20260713041016_26193e53","type":"agent.started","created_at":"2026-07-13T04:10:16.923Z","actor":"codex","payload":{"task_id":"task_20260713041016_e6d47542"}}
+{"id":"event_20260713041016_a56d670f","run_id":"run_20260713041016_26193e53","type":"artifact.created","created_at":"2026-07-13T04:10:17.923Z","actor":"codex","payload":{"artifact_id":"artifact_20260713041016_0267f90c"}}
+{"id":"event_20260713041016_cc265257","run_id":"run_20260713041016_26193e53","type":"memory.candidate_created","created_at":"2026-07-13T04:10:17.923Z","actor":"codex","payload":{"memory_candidate_id":"memcand_20260713041016_896a380e"}}
+{"id":"event_20260713041016_a5bec6fe","run_id":"run_20260713041016_26193e53","type":"run.completed","created_at":"2026-07-13T04:10:17.923Z","actor":"codex","payload":{"summary":"Generated one sample governance loop and proposed one memory candidate."}}

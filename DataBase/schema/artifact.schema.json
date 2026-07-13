@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentharness.local/schema/artifact.schema.json",
+  "title": "Artifact",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "run_id",
+    "type",
+    "created_at",
+    "uri"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^artifact_[a-zA-Z0-9_-]+$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^run_[a-zA-Z0-9_-]+$"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "code_diff",
+        "document",
+        "report",
+        "dataset",
+        "screenshot",
+        "model_output",
+        "other"
+      ]
+    },
+    "title": {
+      "type": "string"
+    },
+    "uri": {
+      "type": "string",
+      "minLength": 1
+    },
+    "checksum": {
+      "type": "string"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  }
+}

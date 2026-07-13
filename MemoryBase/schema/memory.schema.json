@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentharness.local/schema/memory.schema.json",
+  "title": "Memory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "source_candidate_id",
+    "scope",
+    "content",
+    "status",
+    "created_at"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^mem_[a-zA-Z0-9_-]+$"
+    },
+    "source_candidate_id": {
+      "type": "string",
+      "pattern": "^memcand_[a-zA-Z0-9_-]+$"
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 1
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "stale",
+        "superseded",
+        "archived"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^mem_[a-zA-Z0-9_-]+$"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
