@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AgentHarness DataBase Console</title>
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">AH</div>
+        <div>
+          <h1>DataBase</h1>
+          <p>SQLite schema browser</p>
+        </div>
+      </div>
+
+      <div class="meta">
+        <span id="table-count">0 objects</span>
+        <span id="generated-at">Loading</span>
+      </div>
+
+      <button id="readme-button" class="table-button readme-button" type="button">
+        PLS 接入说明
+      </button>
+      <button id="lineage-button" class="table-button readme-button" type="button">
+        血缘关系图
+      </button>
+      <nav id="table-list" class="table-list" aria-label="SQLite tables"></nav>
+    </aside>
+
+    <main class="workspace">
+      <section class="toolbar">
+        <div>
+          <p class="eyebrow">AgentHarness SQLite</p>
+          <h2 id="active-table-name">Loading schema</h2>
+        </div>
+        <button id="refresh-button" type="button" title="Refresh schema">
+          <span aria-hidden="true">↻</span>
+          Refresh
+        </button>
+      </section>
+
+      <section id="status" class="status">Reading DataBase/agentharness.sqlite</section>
+
+      <section id="readme-panel" class="panel readme-panel" hidden>
+        <div class="panel-header">
+          <h3>PLS 数据库能力接入说明</h3>
+          <span>DataBase/docs/pls-consumption-guide.md</span>
+        </div>
+        <div id="readme-content" class="readme-content"></div>
+      </section>
+
+      <section id="lineage-panel" class="panel lineage-panel" hidden>
+        <div class="panel-header">
+          <h3>上下游血缘关系图</h3>
+          <span>前端静态图，不写入 SQLite</span>
+        </div>
+        <div id="lineage-content" class="lineage-content"></div>
+      </section>
+
+      <section id="summary-grid" class="summary-grid">
+        <article>
+          <span>Rows</span>
+          <strong id="row-count">-</strong>
+        </article>
+        <article>
+          <span>Fields</span>
+          <strong id="field-count">-</strong>
+        </article>
+        <article>
+          <span>Indexes</span>
+          <strong id="index-count">-</strong>
+        </article>
+      </section>
+
+      <section id="understanding-panel" class="panel">
+        <div class="panel-header">
+          <h3>Explicit Understanding</h3>
+        </div>
+        <dl class="understanding">
+          <div>
+            <dt>Purpose</dt>
+            <dd id="table-purpose">-</dd>
+          </div>
+          <div>
+            <dt>Product Use</dt>
+            <dd id="product-use">-</dd>
+          </div>
+          <div>
+            <dt>Next Links</dt>
+            <dd id="next-links">-</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="fields-panel" class="panel">
+        <div class="panel-header">
+          <h3>Fields</h3>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>中文名</th>
+                <th>业务含义</th>
+                <th>示例</th>
+                <th>Type</th>
+                <th>Required</th>
+                <th>Key</th>
+                <th>Default</th>
+                <th>技术说明</th>
+              </tr>
+            </thead>
+            <tbody id="fields-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="rows-panel" class="panel">
+        <div class="panel-header">
+          <h3>Sample Rows</h3>
+          <span>First 20 records</span>
+        </div>
+        <div id="rows-wrap" class="table-wrap"></div>
+      </section>
+
+      <section id="sql-panel" class="panel">
+        <div class="panel-header">
+          <h3>Create SQL</h3>
+        </div>
+        <pre id="create-sql"></pre>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

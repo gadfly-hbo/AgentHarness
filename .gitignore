@@ -1,2 +1,4 @@
 .DS_Store
-
+DataBase/*.sqlite
+DataBase/*.sqlite-shm
+DataBase/*.sqlite-wal

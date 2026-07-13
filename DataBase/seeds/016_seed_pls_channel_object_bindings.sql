@@ -1,0 +1,86 @@
+PRAGMA foreign_keys = ON;
+
+DELETE FROM pls_channel_object_bindings
+WHERE source_batch_id = 'batch_channel_object_library_mock_20260706';
+
+INSERT INTO pls_channel_object_bindings (
+  id,
+  workspace_id,
+  binding_id,
+  binding_type,
+  from_canonical_object_key,
+  to_canonical_object_key,
+  source_batch_id,
+  data_version,
+  generated_at,
+  quality_flags_json,
+  raw_json,
+  status,
+  created_at,
+  updated_at
+)
+VALUES
+  (
+    'pcob_ws_demo_bind_store_trade_area_mock_001_v20260706',
+    'ws_demo',
+    'bind_store_trade_area_mock_001',
+    'parent_child',
+    'trade_area:mock_trade_area_city_walk',
+    'store:mock_store_city_walk_001',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    '["mock_sample"]',
+    '{"bindingId":"bind_store_trade_area_mock_001","bindingType":"parent_child","fromCanonicalObjectKey":"trade_area:mock_trade_area_city_walk","toCanonicalObjectKey":"store:mock_store_city_walk_001"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  ),
+  (
+    'pcob_ws_demo_bind_account_platform_mock_001_v20260706',
+    'ws_demo',
+    'bind_account_platform_mock_001',
+    'parent_child',
+    'platform:mock_platform_douyin',
+    'account:mock_account_douyin_style',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    '["mock_sample"]',
+    '{"bindingId":"bind_account_platform_mock_001","bindingType":"parent_child","fromCanonicalObjectKey":"platform:mock_platform_douyin","toCanonicalObjectKey":"account:mock_account_douyin_style"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  ),
+  (
+    'pcob_ws_demo_bind_event_account_mock_001_v20260706',
+    'ws_demo',
+    'bind_event_account_mock_001',
+    'event_to_channel_entity',
+    'marketing_event:mock_event_618',
+    'account:mock_account_douyin_style',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    '["mock_sample"]',
+    '{"bindingId":"bind_event_account_mock_001","bindingType":"event_to_channel_entity","fromCanonicalObjectKey":"marketing_event:mock_event_618","toCanonicalObjectKey":"account:mock_account_douyin_style"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  ),
+  (
+    'pcob_ws_demo_bind_scenario_store_mock_001_v20260706',
+    'ws_demo',
+    'bind_scenario_store_mock_001',
+    'scenario_to_channel_entity',
+    'business_scenario:new_product_launch:mock_style',
+    'store:mock_store_city_walk_001',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    '["mock_sample"]',
+    '{"bindingId":"bind_scenario_store_mock_001","bindingType":"scenario_to_channel_entity","fromCanonicalObjectKey":"business_scenario:new_product_launch:mock_style","toCanonicalObjectKey":"store:mock_store_city_walk_001"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  );

@@ -84,3 +84,35 @@ Run the sample governance loop:
 node Console/commands/agentharness.mjs sample-loop
 node Console/commands/agentharness.mjs inspect
 ```
+
+DataBase SQLite start:
+
+- `DataBase/README.md`
+- `DataBase/docs/design.md`
+- `DataBase/migrations/001_create_entities.sql`
+- `DataBase/migrations/002_create_pls_semantic_dimensions.sql`
+- `DataBase/migrations/003_create_database_field_comments.sql`
+- `DataBase/migrations/004_create_pls_platform_tag_mappings.sql`
+- `DataBase/migrations/005_create_platform_tag_catalog.sql`
+- `DataBase/migrations/006_create_pls_tag_type_dimension_mappings.sql`
+- `DataBase/migrations/007_create_v_pls_tag_type_mapping_review_queue.sql`
+- `DataBase/seeds/001_seed_entities.sql`
+- `DataBase/seeds/002_seed_pls_semantic_dimensions.sql`
+- `DataBase/seeds/003_seed_database_field_comments.sql`
+- `DataBase/seeds/004_seed_pls_platform_tag_mappings.sql`
+- `DataBase/validations/001_validate_entities.sql`
+- `DataBase/validations/002_validate_pls_semantic_dimensions.sql`
+- `DataBase/validations/003_validate_database_field_comments.sql`
+- `DataBase/validations/004_validate_pls_platform_tag_mappings.sql`
+- `DataBase/validations/005_validate_platform_tag_catalog.sql`
+- `DataBase/validations/006_validate_pls_tag_type_dimension_mappings.sql`
+- `DataBase/validations/007_validate_v_pls_tag_type_mapping_review_queue.sql`
+- `DataBase/importers/import_platform_tag_catalog.mjs`
+- `DataBase/importers/import_pls_tag_type_dimension_mappings.mjs`
+- `DataBase/console/`
+
+macOS one-click start:
+
+```bash
+./启动AgentHarness.command
+```

@@ -1,0 +1,78 @@
+PRAGMA foreign_keys = ON;
+
+DELETE FROM pls_product_fit_profiles
+WHERE source_batch_id = 'batch_channel_object_library_mock_20260706';
+
+INSERT INTO pls_product_fit_profiles (
+  id,
+  workspace_id,
+  profile_id,
+  canonical_object_key,
+  source,
+  source_batch_id,
+  data_version,
+  generated_at,
+  time_window,
+  sample_size,
+  confidence,
+  fit_categories_json,
+  fit_price_bands_json,
+  fit_styles_json,
+  fit_occasions_json,
+  fit_launch_types_json,
+  evidence_json,
+  quality_flags_json,
+  raw_json,
+  status,
+  created_at,
+  updated_at
+)
+VALUES
+  (
+    'ppfp_ws_demo_product_fit_account_mock_001_v20260706',
+    'ws_demo',
+    'product_fit_account_mock_001',
+    'account:mock_account_douyin_style',
+    'user_imported',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    '2026-06-01/2026-06-30',
+    320,
+    0.78,
+    '["apparel","top"]',
+    '["mid"]',
+    '["minimal"]',
+    '["work"]',
+    '["new_product_launch"]',
+    '[{"type":"mock_imported_profile","note":"Mock sample only; not a real product-fit conclusion."}]',
+    '["mock_sample"]',
+    '{"profileId":"product_fit_account_mock_001","canonicalObjectKey":"account:mock_account_douyin_style","source":"user_imported","sourceBatchId":"batch_channel_object_library_mock_20260706"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  ),
+  (
+    'ppfp_ws_demo_product_fit_store_mock_001_v20260706',
+    'ws_demo',
+    'product_fit_store_mock_001',
+    'store:mock_store_city_walk_001',
+    'manual_config',
+    'batch_channel_object_library_mock_20260706',
+    'v_channel_object_library_mock_20260706',
+    '2026-07-06T00:00:00Z',
+    NULL,
+    NULL,
+    0.5,
+    '["apparel"]',
+    '["mid"]',
+    '["minimal"]',
+    '["work"]',
+    '["daily_replenishment"]',
+    '[{"type":"manual_reason","note":"Manual mock config; no statistical sample size is claimed."}]',
+    '["mock_sample","manual_config_no_statistical_sample"]',
+    '{"profileId":"product_fit_store_mock_001","canonicalObjectKey":"store:mock_store_city_walk_001","source":"manual_config","sourceBatchId":"batch_channel_object_library_mock_20260706"}',
+    'active',
+    '2026-07-13T00:00:00.000Z',
+    '2026-07-13T00:00:00.000Z'
+  );
