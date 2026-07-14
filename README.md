@@ -6,7 +6,10 @@ user group: teams that need a practical control plane for agents, tools,
 memories, knowledge, data, and ontology before they scale into heavier
 operations.
 
-The long-term architecture is "four bases and one console":
+The long-term architecture is "four bases and one console". These five parts
+are independent and decoupled. They do not form a storage hierarchy; they form
+Harness through explicit joint contracts consumed by external products or
+projects:
 
 - `MemoryBase`: reusable agent memory, preferences, lessons, and operational
   experience.
@@ -18,6 +21,10 @@ The long-term architecture is "four bases and one console":
   mappings across the system.
 - `Console`: the control plane for users, agents, tools, commands, hooks,
   prompts, subagents, model management, and governance workflows.
+
+Current architecture contract:
+
+- `docs/four-bases-one-console-contract.md`
 
 ## Current Strategy
 

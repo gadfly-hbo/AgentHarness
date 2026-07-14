@@ -2,6 +2,21 @@
 
 This document defines the initial domain vocabulary for AgentHarness.
 
+## Top-Level Boundary
+
+AgentHarness is composed from four independent bases and one independent
+console:
+
+- `DataBase`
+- `OntoBase`
+- `MemoryBase`
+- `KnowledgeBase`
+- `Console`
+
+They are connected through explicit joint contracts for each external product
+or project. No base is modeled as the parent, storage backend, or required
+implementation layer of another base.
+
 ## Core Objects
 
 ### Agent

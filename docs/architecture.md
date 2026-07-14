@@ -9,33 +9,34 @@ for many agents, tools, workflows, and domain contexts.
 
 ## Architecture Shape
 
-AgentHarness uses a "four bases and one console" structure.
+AgentHarness uses a "four bases and one console" structure. The four bases and
+the console are independent and decoupled. They do not form a storage hierarchy;
+they form Harness by publishing and consuming explicit joint contracts.
 
 ```text
-                 +----------------+
-                 |    Console     |
-                 +--------+-------+
-                          |
-       +------------------+------------------+
-       |                  |                  |
-+------+-----+     +------+-----+     +------+------+
-| MemoryBase |     | DataBase   |     | KnowledgeBase|
-+------+-----+     +------+-----+     +------+------+
-       |                  |                  |
-       +------------------+------------------+
-                          |
-                    +-----+-----+
-                    | OntoBase  |
-                    +-----------+
+             +----------------+
+             |    Console     |
+             +-------+--------+
+                     |
+              joint contracts
+                     |
++------------+ +------------+ +---------------+ +-----------+
+| DataBase   | | OntoBase   | | MemoryBase    | |KnowledgeBase|
++------------+ +------------+ +---------------+ +-----------+
 ```
 
-The console orchestrates user and agent workflows. The four bases provide
-specialized persistence and meaning:
+The console orchestrates user and agent workflows through contracts rather than
+by reaching into one base as the owner of the others. The four bases provide
+specialized capabilities:
 
 - Memory records operational experience.
 - Data records structured facts about the system's runtime.
 - Knowledge stores source material and retrievable references.
-- Ontology defines the shared language used to connect the other bases.
+- Ontology defines business semantics, concepts, relationships, metrics, rules,
+  actions, and mappings.
+
+No base is the global parent of another base. Cross-base behavior must be
+declared through a joint contract for a specific product or project.
 
 ## Module Responsibilities
 
@@ -77,6 +78,10 @@ DataBase stores structured operational state:
 
 This is the source of truth for runtime governance.
 
+DataBase is not the host for OntoBase, MemoryBase, or KnowledgeBase. It may
+serve as a data source in a joint contract, but each base remains independently
+owned.
+
 ### KnowledgeBase
 
 KnowledgeBase stores source knowledge:
@@ -98,8 +103,31 @@ OntoBase provides semantic structure:
 - Relationship types.
 - Schema mappings.
 - Cross-base identifiers.
+- Metric definitions.
+- Logic rules.
+- Action semantics.
 
 OntoBase prevents the system from becoming a pile of unrelated records.
+
+OntoBase is independent from DataBase. It may bind to database tables, views,
+APIs, files, documents, or product services as external sources, but those
+bindings do not make OntoBase a database extension.
+
+## Joint Contracts
+
+External products and projects consume Harness through explicit joint contracts.
+A joint contract states which bases and console workflows are used, which
+objects or APIs are exposed, how identities align, and which operations need
+approval, refresh, writeback, or audit.
+
+For example, the first PLS channel profile matching phase can consume:
+
+- `DataBase`: PLS tables, views, imports, and feature matrices.
+- `OntoBase`: PLS business objects, semantic dimensions, metrics, rules, and
+  explanation relationships.
+- `MemoryBase`: matching lessons, review outcomes, and model iteration memory.
+- `KnowledgeBase`: PLS standards, platform tag documentation, and import specs.
+- `Console`: import, review, refresh, explanation, and publishing workflows.
 
 ## First Governance Loop
 
