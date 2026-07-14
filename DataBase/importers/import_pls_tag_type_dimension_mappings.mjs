@@ -12,6 +12,58 @@ const repoRoot = path.resolve(databaseRoot, "..");
 const dbPath = path.join(databaseRoot, "agentharness.sqlite");
 
 const now = "2026-07-13T00:00:00.000Z";
+const targetPlatforms = ["天猫", "抖音", "京东"];
+
+const approvedMappingsByPlatform = new Map([
+  [
+    "天猫::AI标签_服饰需求特征",
+    [
+      "pls_dim_l_innovation_brand_mind",
+      "用户补充的AI服饰需求特征描述服饰风格、版型诉求、材质偏好、气质表达与高消费风格人群，归入L层创新与品牌心智。",
+    ],
+  ],
+]);
+
+const jdApprovedMappings = new Map([
+  ["PLUS会员", ["pls_dim_p_identity_cluster", "京东会员身份标签，归入P层综合身份聚类。"]],
+  ["京享值", ["pls_dim_p_purchasing_power", "京享值反映平台会员价值与消费资产水位，归入P层社会资产与购买力。"]],
+  ["促销敏感度", ["pls_dim_s_price_incentive_response", "促销敏感度直接描述价格与权益刺激反应，归入S层价格与利益应激。"]],
+  ["健身爱好者", ["pls_dim_l_lifestyle", "兴趣爱好类生活方式标签，归入L层圈层生活方式。"]],
+  ["全站新品偏好", ["pls_dim_l_innovation_brand_mind", "新品偏好描述创新接受度，归入L层创新与品牌心智。"]],
+  ["冲动购买", ["pls_dim_s_conversion_friction", "冲动购买描述临门转化行为特征，归入S层转化决策摩擦。"]],
+  ["十大靶群", ["pls_dim_p_identity_cluster", "京东靶群是平台人群簇标签，归入P层综合身份聚类。"]],
+  ["城市线级", ["pls_dim_p_demographics", "城市线级是基础地域人口属性，归入P层基础人口学。"]],
+  ["女装用户", ["pls_dim_l_lifestyle", "女装品类用户标签描述品类生活偏好，归入L层圈层生活方式。"]],
+  ["婚姻状况", ["pls_dim_p_identity_cluster", "婚姻状况描述家庭与身份阶段，归入P层综合身份聚类。"]],
+  ["学历", ["pls_dim_p_purchasing_power", "学历可作为社会资产和购买力判断的基础变量，归入P层社会资产与购买力。"]],
+  ["孩子预测年龄", ["pls_dim_p_identity_cluster", "孩子年龄描述家庭生命周期和育儿阶段，归入P层综合身份聚类。"]],
+  ["客户当前使用手机品牌", ["pls_dim_s_environment", "手机品牌是数字设备环境标签，归入S层物理/数字环境。"]],
+  ["宠物爱好者", ["pls_dim_l_lifestyle", "宠物兴趣描述生活方式圈层，归入L层圈层生活方式。"]],
+  ["常用收货省份", ["pls_dim_p_demographics", "常用收货省份是基础地域属性，归入P层基础人口学。"]],
+  ["年龄", ["pls_dim_p_demographics", "年龄是基础人口学变量，归入P层基础人口学。"]],
+  ["性别", ["pls_dim_p_demographics", "性别是基础人口学变量，归入P层基础人口学。"]],
+  ["户外运动爱好者", ["pls_dim_l_lifestyle", "户外运动兴趣描述生活方式圈层，归入L层圈层生活方式。"]],
+  ["无线端操作系统", ["pls_dim_s_environment", "操作系统是数字设备环境标签，归入S层物理/数字环境。"]],
+  ["无线端购物活跃时段-近7天", ["pls_dim_s_environment", "购物活跃时段描述数字触达环境，归入S层物理/数字环境。"]],
+  ["日均订单数量-近30天", ["pls_dim_s_conversion_friction", "订单频次描述购买转化行为强度，归入S层转化决策摩擦。"]],
+  ["日均订单数量-近7天", ["pls_dim_s_conversion_friction", "订单频次描述近期购买转化行为强度，归入S层转化决策摩擦。"]],
+  ["旅游爱好者", ["pls_dim_l_lifestyle", "旅游兴趣描述生活方式圈层，归入L层圈层生活方式。"]],
+  ["有房人群", ["pls_dim_p_purchasing_power", "有房属性反映资产水位，归入P层社会资产与购买力。"]],
+  ["有车一族", ["pls_dim_p_purchasing_power", "有车属性反映资产水位，归入P层社会资产与购买力。"]],
+  ["用户年代", ["pls_dim_p_demographics", "用户年代是基础年龄代际属性，归入P层基础人口学。"]],
+  ["用户月平均支付订单总额", ["pls_dim_p_purchasing_power", "月均支付订单总额直接描述消费金额，归入P层社会资产与购买力。"]],
+  ["用户月支付订单数量", ["pls_dim_s_conversion_friction", "月支付订单数量描述购买频次和转化行为，归入S层转化决策摩擦。"]],
+  ["用户消费月份偏好", ["pls_dim_s_environment", "消费月份偏好描述消费发生时间环境，归入S层物理/数字环境。"]],
+  ["热衷使用优惠券用户", ["pls_dim_s_price_incentive_response", "优惠券使用偏好直接描述权益刺激反应，归入S层价格与利益应激。"]],
+  ["游戏爱好者", ["pls_dim_l_lifestyle", "游戏兴趣描述生活方式圈层，归入L层圈层生活方式。"]],
+  ["科技产品爱好者", ["pls_dim_l_lifestyle", "科技产品兴趣描述品类与生活方式偏好，归入L层圈层生活方式。"]],
+  ["秒杀商品偏好", ["pls_dim_s_price_incentive_response", "秒杀偏好描述促销机制响应，归入S层价格与利益应激。"]],
+  ["职业", ["pls_dim_p_identity_cluster", "职业描述社会身份和人群角色，归入P层综合身份聚类。"]],
+  ["评价敏感度", ["pls_dim_s_conversion_friction", "评价敏感度描述购买前决策阻力，归入S层转化决策摩擦。"]],
+  ["购买力", ["pls_dim_p_purchasing_power", "购买力是消费资产水位标签，归入P层社会资产与购买力。"]],
+  ["体育运动爱好者", ["pls_dim_l_lifestyle", "体育运动兴趣描述生活方式圈层，归入L层圈层生活方式。"]],
+  ["商品折扣率偏好", ["pls_dim_s_price_incentive_response", "折扣率偏好直接描述价格刺激反应，归入S层价格与利益应激。"]],
+]);
 
 const rules = [
   {
@@ -101,7 +153,7 @@ async function main() {
         tag_type,
         COUNT(*) AS tag_count
       FROM platform_tag_catalog
-      WHERE platform IN ('天猫', '抖音')
+        WHERE platform IN (${targetPlatforms.map(sqlValue).join(", ")})
         AND status = 'active'
       GROUP BY platform, tag_type
     ),
@@ -115,7 +167,7 @@ async function main() {
           ORDER BY source_row
         ) AS rn
       FROM platform_tag_catalog
-      WHERE platform IN ('天猫', '抖音')
+      WHERE platform IN (${targetPlatforms.map(sqlValue).join(", ")})
         AND status = 'active'
     ),
     examples AS (
@@ -144,7 +196,7 @@ async function main() {
     "BEGIN;",
     `
 DELETE FROM pls_tag_type_dimension_mappings
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN (${targetPlatforms.map(sqlValue).join(", ")})
   AND NOT EXISTS (
     SELECT 1
     FROM platform_tag_catalog catalog
@@ -156,7 +208,7 @@ WHERE platform IN ('天猫', '抖音')
   ];
 
   for (const item of tagTypes) {
-    const suggestion = suggestDimension(item.tag_type, item.examples || "");
+    const suggestion = suggestDimension(item.platform, item.tag_type, item.examples || "");
     const id = makeId(item.platform, item.tag_type);
     const values = [
       id,
@@ -190,11 +242,31 @@ INSERT INTO pls_tag_type_dimension_mappings (
 )
 VALUES (${values.map(sqlValue).join(", ")})
 ON CONFLICT(platform, tag_type) DO UPDATE SET
-  dimension_id = excluded.dimension_id,
-  mapping_status = excluded.mapping_status,
-  mapping_method = excluded.mapping_method,
-  confidence = excluded.confidence,
-  rationale = excluded.rationale,
+  dimension_id = CASE
+    WHEN pls_tag_type_dimension_mappings.mapping_status = 'approved'
+    THEN pls_tag_type_dimension_mappings.dimension_id
+    ELSE excluded.dimension_id
+  END,
+  mapping_status = CASE
+    WHEN pls_tag_type_dimension_mappings.mapping_status = 'approved'
+    THEN pls_tag_type_dimension_mappings.mapping_status
+    ELSE excluded.mapping_status
+  END,
+  mapping_method = CASE
+    WHEN pls_tag_type_dimension_mappings.mapping_status = 'approved'
+    THEN pls_tag_type_dimension_mappings.mapping_method
+    ELSE excluded.mapping_method
+  END,
+  confidence = CASE
+    WHEN pls_tag_type_dimension_mappings.mapping_status = 'approved'
+    THEN pls_tag_type_dimension_mappings.confidence
+    ELSE excluded.confidence
+  END,
+  rationale = CASE
+    WHEN pls_tag_type_dimension_mappings.mapping_status = 'approved'
+    THEN pls_tag_type_dimension_mappings.rationale
+    ELSE excluded.rationale
+  END,
   source_ref = excluded.source_ref,
   status = excluded.status,
   updated_at = excluded.updated_at;
@@ -206,7 +278,28 @@ ON CONFLICT(platform, tag_type) DO UPDATE SET
   console.log(`Imported ${tagTypes.length} PLS tag type dimension mappings.`);
 }
 
-function suggestDimension(tagType, examples) {
+function suggestDimension(platform, tagType, examples) {
+  const approvedKey = `${platform}::${tagType}`;
+  if (approvedMappingsByPlatform.has(approvedKey)) {
+    const [dimensionId, rationale] = approvedMappingsByPlatform.get(approvedKey);
+    return {
+      dimensionId,
+      mappingStatus: "approved",
+      confidence: 1,
+      rationale: `${rationale} 判断依据：平台="${platform}"；标签类型="${tagType}"；代表标签值="${examples || "无"}"。`,
+    };
+  }
+
+  if (platform === "京东" && jdApprovedMappings.has(tagType)) {
+    const [dimensionId, rationale] = jdApprovedMappings.get(tagType);
+    return {
+      dimensionId,
+      mappingStatus: "approved",
+      confidence: 1,
+      rationale: `${rationale} 判断依据：京东标签类型="${tagType}"；代表标签值="${examples || "无"}"。`,
+    };
+  }
+
   const evidence = `${tagType} ${examples}`;
   for (const rule of rules) {
     const matchedByType = rule.typePatterns.some((pattern) =>

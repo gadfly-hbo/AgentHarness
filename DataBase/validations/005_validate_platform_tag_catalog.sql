@@ -4,26 +4,28 @@
 SELECT
   'platform_tag_catalog_total' AS check_name,
   COUNT(*) AS actual,
-  9433 AS expected,
-  CASE WHEN COUNT(*) = 9433 THEN 'pass' ELSE 'fail' END AS result
+  9702 AS expected,
+  CASE WHEN COUNT(*) = 9702 THEN 'pass' ELSE 'fail' END AS result
 FROM platform_tag_catalog
-WHERE platform IN ('天猫', '抖音');
+WHERE platform IN ('天猫', '抖音', '京东');
 
 SELECT
   'platform_tag_catalog_by_platform' AS check_name,
   platform,
   COUNT(*) AS actual,
   CASE platform
-    WHEN '天猫' THEN 3538
-    WHEN '抖音' THEN 5895
+    WHEN '天猫' THEN 3573
+    WHEN '抖音' THEN 5902
+    WHEN '京东' THEN 227
   END AS expected,
   CASE
-    WHEN platform = '天猫' AND COUNT(*) = 3538 THEN 'pass'
-    WHEN platform = '抖音' AND COUNT(*) = 5895 THEN 'pass'
+    WHEN platform = '天猫' AND COUNT(*) = 3573 THEN 'pass'
+    WHEN platform = '抖音' AND COUNT(*) = 5902 THEN 'pass'
+    WHEN platform = '京东' AND COUNT(*) = 227 THEN 'pass'
     ELSE 'fail'
   END AS result
 FROM platform_tag_catalog
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN ('天猫', '抖音', '京东')
 GROUP BY platform
 ORDER BY platform;
 
@@ -40,7 +42,7 @@ SELECT
   platform,
   COUNT(DISTINCT tag_type) AS tag_type_count
 FROM platform_tag_catalog
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN ('天猫', '抖音', '京东')
 GROUP BY platform
 ORDER BY platform;
 
@@ -57,7 +59,7 @@ SELECT
   tag_type,
   COUNT(*) AS tag_count
 FROM platform_tag_catalog
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN ('天猫', '抖音', '京东')
 GROUP BY platform, tag_type
 ORDER BY platform, tag_count DESC, tag_type
 LIMIT 40;

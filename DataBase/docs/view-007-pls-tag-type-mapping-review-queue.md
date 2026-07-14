@@ -5,6 +5,11 @@
 `v_pls_tag_type_mapping_review_queue` is a SQLite view for reviewing platform
 tag type to PLS dimension mappings.
 
+This view has been retired by
+`DataBase/migrations/009_drop_v_pls_tag_type_mapping_review_queue.sql` after all
+current tag type mappings were approved. The validation now checks that the old
+review queue view is absent from the active SQLite schema.
+
 It does not copy data. It orders existing mappings from
 `pls_tag_type_dimension_mappings` by review urgency and joins tag counts from
 `platform_tag_catalog`.
@@ -12,6 +17,7 @@ It does not copy data. It orders existing mappings from
 ## Files
 
 - Migration: `DataBase/migrations/007_create_v_pls_tag_type_mapping_review_queue.sql`
+- Retirement: `DataBase/migrations/009_drop_v_pls_tag_type_mapping_review_queue.sql`
 - Validation: `DataBase/validations/007_validate_v_pls_tag_type_mapping_review_queue.sql`
 
 ## Review Priority

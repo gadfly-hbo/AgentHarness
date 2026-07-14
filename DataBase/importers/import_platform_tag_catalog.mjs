@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { createReadStream } from "node:fs";
-import { readFile } from "node:fs/promises";
+import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { spawn } from "node:child_process";
@@ -11,16 +11,33 @@ const __dirname = path.dirname(__filename);
 const databaseRoot = path.resolve(__dirname, "..");
 const repoRoot = path.resolve(databaseRoot, "..");
 const dbPath = path.join(databaseRoot, "agentharness.sqlite");
-const sourceDir = "/Users/huangbo/Downloads/三大平台标签";
+const platformTagSourceRoot = path.join(
+  databaseRoot,
+  "source_files",
+  "platform_tags",
+  "v0.1",
+);
 
 const sources = [
   {
     platform: "天猫",
+    sourceDir: platformTagSourceRoot,
     fileName: "1. 天猫_标签类型_标签_20260201.csv",
   },
   {
     platform: "抖音",
+    sourceDir: platformTagSourceRoot,
     fileName: "3. 抖音_标签类型_标签_20260201.csv",
+  },
+  {
+    platform: "京东",
+    sourceDir: platformTagSourceRoot,
+    fileName: "4. 京东_标签类型_标签_20260714.csv",
+  },
+  {
+    platform: "天猫",
+    sourceDir: platformTagSourceRoot,
+    fileName: "5. 天猫_AI标签_服饰需求特征_20260714.csv",
   },
 ];
 
@@ -36,7 +53,11 @@ async function main() {
   let imported = 0;
 
   for (const source of sources) {
-    const filePath = path.join(sourceDir, source.fileName);
+    const filePath = path.join(source.sourceDir, source.fileName);
+    if (!(await fileExists(filePath))) {
+      console.warn(`Skipped missing source file: ${filePath}`);
+      continue;
+    }
     const rows = await readCsv(filePath);
     const [header, ...records] = rows;
     const tagTypeIndex = header.indexOf("标签类型");
@@ -72,7 +93,7 @@ async function main() {
         levels[3] || null,
         leafLabel,
         labelPath,
-        path.join("三大平台标签", source.fileName),
+        path.join("platform_tags", "v0.1", source.fileName),
         sourceRow,
         "active",
         "2026-07-13T00:00:00.000Z",
@@ -120,6 +141,15 @@ ON CONFLICT(platform, source_file, source_row) DO UPDATE SET
 async function readCsv(filePath) {
   const text = await readFile(filePath, "utf8");
   return parseCsv(text.replace(/^\uFEFF/, ""));
+}
+
+async function fileExists(filePath) {
+  try {
+    await access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function parseCsv(text) {

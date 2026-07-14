@@ -26,8 +26,14 @@ platform labels while still preserving source traceability.
 
 ## Current Scope
 
-Only Tmall and Douyin are included. Xiaohongshu is intentionally excluded.
-JD will be connected later.
+Tmall, Douyin, and JD are included. Xiaohongshu is intentionally excluded.
+JD contributes 227 concrete tag value mappings.
+The user-supplied Tmall tag type `AI标签_服饰需求特征` contributes 35 concrete
+tag value mappings. Percentages from the original user note are intentionally
+not stored as tag values.
+The Douyin actual-extract profile tag type `美妆行业特色人群` contributes 7
+concrete tag value mappings. Percentages and TGI values from the source profile
+extract are intentionally not stored as tag values.
 
 The initial import inherits dimensions from the fully approved
 `pls_tag_type_dimension_mappings` table. Future iterations can override specific

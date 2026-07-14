@@ -28,8 +28,18 @@ platform_tag_catalog.tag_type -> pls_semantic_dimensions
 
 ## Current Scope
 
-Only Tmall and Douyin are included. Xiaohongshu is intentionally excluded.
-JD will be connected later.
+Tmall, Douyin, and JD are included. Xiaohongshu is intentionally excluded.
+
+JD currently has 38 approved tag type mappings imported from
+`DataBase/source_files/platform_tags/v0.1/4. 京东_标签类型_标签_20260714.csv`.
+
+The user-supplied Tmall tag type `AI标签_服饰需求特征` is approved into
+`L_INNOVATION_BRAND_MIND` because it describes apparel style, fit, material,
+temperament expression, and high-spend style groups.
+
+The Douyin tag type `美妆行业特色人群` is approved into
+`P_IDENTITY_CLUSTER` because it describes beauty consumer personas such as
+拔草、格调、悦己、理性刚需 and 美潮文艺 groups.
 
 ## Next Work
 

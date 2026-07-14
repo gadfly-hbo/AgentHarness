@@ -4,9 +4,25 @@
 SELECT
   'field_comments_total' AS check_name,
   COUNT(*) AS actual,
-  69 AS expected,
-  CASE WHEN COUNT(*) = 69 THEN 'pass' ELSE 'fail' END AS result
-FROM database_field_comments;
+  (
+    SELECT COUNT(*)
+    FROM sqlite_schema objects
+    JOIN pragma_table_info(objects.name) fields
+    WHERE objects.type IN ('table', 'view')
+      AND objects.name NOT LIKE 'sqlite_%'
+  ) AS expected_minimum,
+  CASE
+    WHEN COUNT(*) >= (
+      SELECT COUNT(*)
+      FROM sqlite_schema objects
+      JOIN pragma_table_info(objects.name) fields
+      WHERE objects.type IN ('table', 'view')
+        AND objects.name NOT LIKE 'sqlite_%'
+    ) THEN 'pass'
+    ELSE 'fail'
+  END AS result
+FROM database_field_comments
+WHERE status = 'active';
 
 SELECT
   'field_comments_self_comments' AS check_name,
@@ -62,23 +78,11 @@ SELECT
   0 AS expected,
   CASE WHEN COUNT(*) = 0 THEN 'pass' ELSE 'fail' END AS result
 FROM (
-  SELECT 'database_field_comments' AS table_name, name AS field_name
-  FROM pragma_table_info('database_field_comments')
-  UNION ALL
-  SELECT 'entities' AS table_name, name AS field_name
-  FROM pragma_table_info('entities')
-  UNION ALL
-  SELECT 'pls_semantic_dimensions' AS table_name, name AS field_name
-  FROM pragma_table_info('pls_semantic_dimensions')
-  UNION ALL
-  SELECT 'pls_platform_tag_mappings' AS table_name, name AS field_name
-  FROM pragma_table_info('pls_platform_tag_mappings')
-  UNION ALL
-  SELECT 'platform_tag_catalog' AS table_name, name AS field_name
-  FROM pragma_table_info('platform_tag_catalog')
-  UNION ALL
-  SELECT 'pls_tag_type_dimension_mappings' AS table_name, name AS field_name
-  FROM pragma_table_info('pls_tag_type_dimension_mappings')
+  SELECT objects.name AS table_name, fields.name AS field_name
+  FROM sqlite_schema objects
+  JOIN pragma_table_info(objects.name) fields
+  WHERE objects.type IN ('table', 'view')
+    AND objects.name NOT LIKE 'sqlite_%'
 ) fields
 LEFT JOIN database_field_comments comments
   ON comments.table_name = fields.table_name

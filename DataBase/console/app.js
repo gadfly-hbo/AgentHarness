@@ -3,11 +3,55 @@ let activeTableName = null;
 let readme = "";
 let activeMode = "table";
 
+const profileMetricTemplateHeaders = [
+  "workspace_id",
+  "profile_id",
+  "canonical_object_key",
+  "channel_object_type",
+  "channel_object_name",
+  "platform",
+  "tag_type",
+  "leaf_label",
+  "platform_tag_catalog_id",
+  "metric_name",
+  "metric_value",
+  "metric_unit",
+  "metric_display_value",
+  "profile_time_window",
+  "sample_size",
+  "source_file",
+  "source_row",
+  "source_batch_id",
+  "raw_json",
+];
+
+const profileMetricTemplateSample = {
+  workspace_id: "pls_default",
+  profile_id: "profile_douyin_101326115008_2026q2",
+  canonical_object_key: "account:douyin:101326115008",
+  channel_object_type: "account",
+  channel_object_name: "抖音账号 101326115008",
+  platform: "抖音",
+  tag_type: "性别",
+  leaf_label: "女",
+  platform_tag_catalog_id: "",
+  metric_name: "share",
+  metric_value: "47.28",
+  metric_unit: "percent",
+  metric_display_value: "47.28%",
+  profile_time_window: "2026Q2",
+  sample_size: "",
+  source_file: "101326115008画像数据.csv",
+  source_row: "2",
+  source_batch_id: "platform_profile_v0.1_20260714",
+  raw_json: "",
+};
+
 const lineageSections = [
   {
     title: "平台标签到主体 PLS 特征",
     summary:
-      "用于把天猫、抖音等平台原始标签统一映射到 PLS 三层九维，并形成主体级特征。",
+      "用于把天猫、抖音、京东等平台原始标签统一映射到 PLS 三层九维，并形成主体级特征。",
     columns: [
       {
         title: "基础字典",
@@ -110,6 +154,63 @@ const lineageSections = [
     ],
   },
   {
+    title: "真实平台画像指标到渠道特征矩阵",
+    summary:
+      "用于承接天猫、抖音、京东真实导出的人群画像指标，并按 PLS 维度形成渠道对象特征。",
+    columns: [
+      {
+        title: "真实导入",
+        nodes: [
+          node("真实画像导入页", "frontend", "CSV 模板下载、预检与写库"),
+          node("POST /api/platform-profile-import", "frontend", "本地导入 API"),
+          node("import_platform_profile_tag_metrics.mjs", "frontend", "命令行导入器"),
+          node("platform_profile_tag_metrics", "table", "真实画像标签指标"),
+          node("platform_tag_catalog", "table", "平台原始标签目录"),
+        ],
+      },
+      {
+        title: "语义展开",
+        nodes: [
+          node("v_pls_platform_tag_value_semantics", "view", "平台标签值语义展开"),
+          node("v_platform_profile_tag_metric_semantics", "view", "真实画像指标语义展开"),
+        ],
+      },
+      {
+        title: "维度聚合",
+        nodes: [
+          node(
+            "v_platform_profile_channel_dimension_features",
+            "view",
+            "真实渠道维度行式特征",
+          ),
+        ],
+      },
+      {
+        title: "模型特征",
+        nodes: [
+          node("v_platform_profile_channel_feature_matrix", "view", "真实渠道九维宽表"),
+        ],
+      },
+    ],
+    edges: [
+      ["真实画像导入页", "POST /api/platform-profile-import"],
+      ["POST /api/platform-profile-import", "platform_profile_tag_metrics"],
+      ["import_platform_profile_tag_metrics.mjs", "platform_profile_tag_metrics"],
+      ["platform_tag_catalog", "platform_profile_tag_metrics"],
+      ["platform_tag_catalog", "v_pls_platform_tag_value_semantics"],
+      ["v_pls_platform_tag_value_semantics", "v_platform_profile_tag_metric_semantics"],
+      ["platform_profile_tag_metrics", "v_platform_profile_tag_metric_semantics"],
+      [
+        "v_platform_profile_tag_metric_semantics",
+        "v_platform_profile_channel_dimension_features",
+      ],
+      [
+        "v_platform_profile_channel_dimension_features",
+        "v_platform_profile_channel_feature_matrix",
+      ],
+    ],
+  },
+  {
     title: "元数据说明层",
     summary:
       "用于给 HTML console 提供中文字段名、业务含义、示例和技术说明，不参与业务数据计算。",
@@ -140,6 +241,7 @@ const elements = {
   generatedAt: document.querySelector("#generated-at"),
   readmeButton: document.querySelector("#readme-button"),
   lineageButton: document.querySelector("#lineage-button"),
+  importButton: document.querySelector("#import-button"),
   tableList: document.querySelector("#table-list"),
   activeTableName: document.querySelector("#active-table-name"),
   status: document.querySelector("#status"),
@@ -147,6 +249,13 @@ const elements = {
   readmeContent: document.querySelector("#readme-content"),
   lineagePanel: document.querySelector("#lineage-panel"),
   lineageContent: document.querySelector("#lineage-content"),
+  importPanel: document.querySelector("#import-panel"),
+  downloadTemplateButton: document.querySelector("#download-template-button"),
+  importFile: document.querySelector("#import-file"),
+  importFolder: document.querySelector("#import-folder"),
+  previewImportButton: document.querySelector("#preview-import-button"),
+  applyImportButton: document.querySelector("#apply-import-button"),
+  importResult: document.querySelector("#import-result"),
   summaryGrid: document.querySelector("#summary-grid"),
   understandingPanel: document.querySelector("#understanding-panel"),
   fieldsPanel: document.querySelector("#fields-panel"),
@@ -173,6 +282,13 @@ elements.lineageButton.addEventListener("click", () => {
   activeMode = "lineage";
   render();
 });
+elements.importButton.addEventListener("click", () => {
+  activeMode = "import";
+  render();
+});
+elements.downloadTemplateButton.addEventListener("click", () => downloadProfileMetricTemplate());
+elements.previewImportButton.addEventListener("click", () => runPlatformProfileImport(false));
+elements.applyImportButton.addEventListener("click", () => runPlatformProfileImport(true));
 
 loadSchema();
 
@@ -210,6 +326,8 @@ function render() {
     renderReadme();
   } else if (activeMode === "lineage") {
     renderLineage();
+  } else if (activeMode === "import") {
+    renderImport();
   } else {
     renderActiveTable();
   }
@@ -219,6 +337,7 @@ function renderTableList() {
   elements.tableList.replaceChildren();
   elements.readmeButton.classList.toggle("active", activeMode === "readme");
   elements.lineageButton.classList.toggle("active", activeMode === "lineage");
+  elements.importButton.classList.toggle("active", activeMode === "import");
 
   for (const table of schema.tables) {
     const button = document.createElement("button");
@@ -252,6 +371,17 @@ function renderLineage() {
   elements.lineageContent.replaceChildren(renderLineageContent());
 }
 
+function renderImport() {
+  elements.activeTableName.textContent = "真实平台画像 CSV 导入";
+  showSpecialView("import");
+  elements.rowCount.textContent = "-";
+  elements.fieldCount.textContent = "-";
+  elements.indexCount.textContent = "-";
+  if (!elements.importResult.hasChildNodes()) {
+    renderImportEmptyState();
+  }
+}
+
 function renderActiveTable() {
   const table = schema.tables.find((item) => item.name === activeTableName);
   if (!table) {
@@ -276,13 +406,231 @@ function renderActiveTable() {
 function showSpecialView(mode) {
   const isReadme = mode === "readme";
   const isLineage = mode === "lineage";
+  const isImport = mode === "import";
   elements.readmePanel.hidden = !isReadme;
   elements.lineagePanel.hidden = !isLineage;
-  elements.summaryGrid.hidden = isReadme || isLineage;
-  elements.understandingPanel.hidden = isReadme || isLineage;
-  elements.fieldsPanel.hidden = isReadme || isLineage;
-  elements.rowsPanel.hidden = isReadme || isLineage;
-  elements.sqlPanel.hidden = isReadme || isLineage;
+  elements.importPanel.hidden = !isImport;
+  elements.summaryGrid.hidden = isReadme || isLineage || isImport;
+  elements.understandingPanel.hidden = isReadme || isLineage || isImport;
+  elements.fieldsPanel.hidden = isReadme || isLineage || isImport;
+  elements.rowsPanel.hidden = isReadme || isLineage || isImport;
+  elements.sqlPanel.hidden = isReadme || isLineage || isImport;
+}
+
+async function runPlatformProfileImport(apply) {
+  const selectedFiles = [
+    ...Array.from(elements.importFile.files || []),
+    ...Array.from(elements.importFolder.files || []),
+  ]
+    .filter((file) => file.name.toLowerCase().endsWith(".csv"));
+  if (selectedFiles.length === 0) {
+    setStatus("请选择 CSV 文件。", true);
+    return;
+  }
+
+  setImportButtonsDisabled(true);
+  setStatus(
+    apply
+      ? `Importing ${selectedFiles.length} platform profile CSV file(s)`
+      : `Previewing ${selectedFiles.length} platform profile CSV file(s)`,
+  );
+
+  try {
+    const files = await Promise.all(
+      selectedFiles.map(async (file) => ({
+        fileName: file.webkitRelativePath || file.name,
+        csvText: await file.text(),
+      })),
+    );
+    const response = await fetch("/api/platform-profile-import", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        files,
+        apply,
+      }),
+    });
+    const result = await response.json();
+    renderImportResult(result);
+    if (!response.ok) {
+      setStatus(result.error || "CSV 预检未通过，请查看导入结果。", true);
+      return;
+    }
+    setStatus(apply ? "导入完成，正在刷新数据库结构" : "预检完成，未写入数据库");
+    if (apply) {
+      await loadSchema();
+      activeMode = "import";
+      render();
+    }
+  } catch (error) {
+    setStatus(error.message, true);
+  } finally {
+    setImportButtonsDisabled(false);
+  }
+}
+
+function setImportButtonsDisabled(disabled) {
+  elements.previewImportButton.disabled = disabled;
+  elements.applyImportButton.disabled = disabled;
+}
+
+function downloadProfileMetricTemplate() {
+  const csv = [
+    profileMetricTemplateHeaders.join(","),
+    profileMetricTemplateHeaders
+      .map((header) => csvCell(profileMetricTemplateSample[header] || ""))
+      .join(","),
+  ].join("\n");
+  const blob = new Blob([`\uFEFF${csv}`], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "platform_profile_tag_metrics_template.csv";
+  document.body.append(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function csvCell(value) {
+  const text = String(value ?? "");
+  if (/[",\n\r]/.test(text)) {
+    return `"${text.replaceAll('"', '""')}"`;
+  }
+  return text;
+}
+
+function renderImportEmptyState() {
+  elements.importResult.replaceChildren();
+  const empty = document.createElement("div");
+  empty.className = "empty";
+  empty.textContent = "选择按模板整理好的 CSV 后，先点“预检 CSV”，确认无错误再导入数据库。";
+  elements.importResult.append(empty);
+}
+
+function renderImportResult(result) {
+  elements.importResult.replaceChildren();
+  if (result.error) {
+    const error = document.createElement("div");
+    error.className = "import-error";
+    error.textContent = result.error;
+    elements.importResult.append(error);
+    return;
+  }
+
+  const summary = result.summary || {};
+  const summaryGrid = document.createElement("div");
+  summaryGrid.className = "import-summary";
+  summaryGrid.append(
+    importSummaryCard("模式", result.applied ? "已写库" : "预检"),
+    importSummaryCard("文件数", summary.fileCount ?? 0),
+    importSummaryCard("有效行", summary.validRows ?? 0),
+    importSummaryCard("归一化行", summary.normalizedRows ?? 0),
+    importSummaryCard("错误", summary.errorCount ?? 0),
+    importSummaryCard("警告", summary.warningCount ?? 0),
+    importSummaryCard("平台数", summary.platformCount ?? 0),
+    importSummaryCard("对象数", summary.objectCount ?? 0),
+    importSummaryCard("指标口径", summary.metricKindCount ?? 0),
+    importSummaryCard("批次数", summary.batchCount ?? 0),
+  );
+  elements.importResult.append(summaryGrid);
+
+  if (result.errors?.length > 0) {
+    elements.importResult.append(importMessageList("错误明细", result.errors, "import-error"));
+  }
+  if (result.warnings?.length > 0) {
+    elements.importResult.append(importMessageList("警告明细", result.warnings, "import-warning"));
+  }
+  if (result.rows?.length > 0) {
+    elements.importResult.append(importPreviewTable(result.rows));
+  }
+  if (result.normalization?.length > 0) {
+    elements.importResult.append(importNormalizationTable(result.normalization));
+  }
+}
+
+function importSummaryCard(label, value) {
+  const card = document.createElement("article");
+  const span = document.createElement("span");
+  span.textContent = label;
+  const strong = document.createElement("strong");
+  strong.textContent = value;
+  card.append(span, strong);
+  return card;
+}
+
+function importMessageList(title, messages, className) {
+  const section = document.createElement("section");
+  section.className = `import-messages ${className}`;
+  const heading = document.createElement("h4");
+  heading.textContent = title;
+  const list = document.createElement("ol");
+  for (const item of messages.slice(0, 100)) {
+    const li = document.createElement("li");
+    const file = item.sourceFile ? `${item.sourceFile} ` : "";
+    li.textContent = `${file}第 ${item.sourceRow || "-"} 行：${item.message}`;
+    list.append(li);
+  }
+  section.append(heading, list);
+  return section;
+}
+
+function importPreviewTable(rows) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "table-wrap import-preview";
+  const title = document.createElement("h4");
+  title.textContent = "解析预览";
+  const table = document.createElement("table");
+  const columns = Object.keys(rows[0]);
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  for (const column of columns) {
+    const th = document.createElement("th");
+    th.textContent = column;
+    headRow.append(th);
+  }
+  thead.append(headRow);
+  const tbody = document.createElement("tbody");
+  for (const row of rows) {
+    const tr = document.createElement("tr");
+    for (const column of columns) {
+      tr.append(textCell(formatValue(row[column])));
+    }
+    tbody.append(tr);
+  }
+  table.append(thead, tbody);
+  wrapper.append(title, table);
+  return wrapper;
+}
+
+function importNormalizationTable(rows) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "table-wrap import-preview";
+  const title = document.createElement("h4");
+  title.textContent = "占比归一化摘要";
+  const table = document.createElement("table");
+  const columns = Object.keys(rows[0]);
+  const thead = document.createElement("thead");
+  const headRow = document.createElement("tr");
+  for (const column of columns) {
+    const th = document.createElement("th");
+    th.textContent = column;
+    headRow.append(th);
+  }
+  thead.append(headRow);
+  const tbody = document.createElement("tbody");
+  for (const row of rows) {
+    const tr = document.createElement("tr");
+    for (const column of columns) {
+      tr.append(textCell(formatValue(row[column])));
+    }
+    tbody.append(tr);
+  }
+  table.append(thead, tbody);
+  wrapper.append(title, table);
+  return wrapper;
 }
 
 function renderLineageContent() {

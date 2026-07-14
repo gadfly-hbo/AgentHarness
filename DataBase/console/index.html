@@ -27,6 +27,9 @@
       <button id="lineage-button" class="table-button readme-button" type="button">
         血缘关系图
       </button>
+      <button id="import-button" class="table-button readme-button" type="button">
+        真实画像导入
+      </button>
       <nav id="table-list" class="table-list" aria-label="SQLite tables"></nav>
     </aside>
 
@@ -58,6 +61,35 @@
           <span>前端静态图，不写入 SQLite</span>
         </div>
         <div id="lineage-content" class="lineage-content"></div>
+      </section>
+
+      <section id="import-panel" class="panel import-panel" hidden>
+        <div class="panel-header">
+          <h3>真实平台画像 CSV 导入</h3>
+          <button id="download-template-button" class="link-button" type="button">下载模板</button>
+        </div>
+        <div class="import-layout">
+          <form id="import-form" class="import-form">
+            <label>
+              CSV 文件
+              <input id="import-file" type="file" accept=".csv,text/csv" multiple>
+            </label>
+            <label>
+              CSV 文件夹
+              <input id="import-folder" type="file" accept=".csv,text/csv" multiple webkitdirectory>
+            </label>
+            <div class="import-actions">
+              <button id="preview-import-button" type="button">预检 CSV</button>
+              <button id="apply-import-button" type="button">导入数据库</button>
+            </div>
+          </form>
+          <div class="import-help">
+            <strong>模板要求</strong>
+            <p>按模板准备长表，一行表示一个对象命中的一个平台标签指标。占比、TGI、人数、指数需要拆成不同 `metric_name` 行。</p>
+            <p>若预检提示标签目录匹配到多条记录，请在 CSV 中补充 `platform_tag_catalog_id` 后再导入。</p>
+          </div>
+        </div>
+        <div id="import-result" class="import-result"></div>
       </section>
 
       <section id="summary-grid" class="summary-grid">

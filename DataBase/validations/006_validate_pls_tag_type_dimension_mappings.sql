@@ -4,26 +4,28 @@
 SELECT
   'tag_type_mappings_total' AS check_name,
   COUNT(*) AS actual,
-  434 AS expected,
-  CASE WHEN COUNT(*) = 434 THEN 'pass' ELSE 'fail' END AS result
+  474 AS expected,
+  CASE WHEN COUNT(*) = 474 THEN 'pass' ELSE 'fail' END AS result
 FROM pls_tag_type_dimension_mappings
-WHERE platform IN ('天猫', '抖音');
+WHERE platform IN ('天猫', '抖音', '京东');
 
 SELECT
   'tag_type_mappings_by_platform' AS check_name,
   platform,
   COUNT(*) AS actual,
   CASE platform
-    WHEN '天猫' THEN 365
-    WHEN '抖音' THEN 69
+    WHEN '天猫' THEN 366
+    WHEN '抖音' THEN 70
+    WHEN '京东' THEN 38
   END AS expected,
   CASE
-    WHEN platform = '天猫' AND COUNT(*) = 365 THEN 'pass'
-    WHEN platform = '抖音' AND COUNT(*) = 69 THEN 'pass'
+    WHEN platform = '天猫' AND COUNT(*) = 366 THEN 'pass'
+    WHEN platform = '抖音' AND COUNT(*) = 70 THEN 'pass'
+    WHEN platform = '京东' AND COUNT(*) = 38 THEN 'pass'
     ELSE 'fail'
   END AS result
 FROM pls_tag_type_dimension_mappings
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN ('天猫', '抖音', '京东')
 GROUP BY platform
 ORDER BY platform;
 

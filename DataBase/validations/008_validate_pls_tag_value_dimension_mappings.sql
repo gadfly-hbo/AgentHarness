@@ -7,20 +7,20 @@ SELECT
   (
     SELECT COUNT(*)
     FROM platform_tag_catalog
-    WHERE platform IN ('天猫', '抖音')
+    WHERE platform IN ('天猫', '抖音', '京东')
       AND status = 'active'
   ) AS expected,
   CASE
     WHEN COUNT(*) = (
       SELECT COUNT(*)
       FROM platform_tag_catalog
-      WHERE platform IN ('天猫', '抖音')
+      WHERE platform IN ('天猫', '抖音', '京东')
         AND status = 'active'
     ) THEN 'pass'
     ELSE 'fail'
   END AS result
 FROM pls_tag_value_dimension_mappings
-WHERE platform IN ('天猫', '抖音');
+WHERE platform IN ('天猫', '抖音', '京东');
 
 SELECT
   'tag_value_mappings_by_platform' AS check_name,
@@ -42,7 +42,7 @@ SELECT
     ELSE 'fail'
   END AS result
 FROM pls_tag_value_dimension_mappings mappings
-WHERE mappings.platform IN ('天猫', '抖音')
+WHERE mappings.platform IN ('天猫', '抖音', '京东')
 GROUP BY mappings.platform
 ORDER BY mappings.platform;
 

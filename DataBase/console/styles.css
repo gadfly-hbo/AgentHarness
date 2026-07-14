@@ -297,6 +297,143 @@ pre {
   padding: 18px;
 }
 
+.import-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px;
+}
+
+.import-form {
+  display: grid;
+  gap: 14px;
+}
+
+.import-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.import-form input[type="file"] {
+  width: 100%;
+  min-height: 42px;
+  padding: 8px;
+  color: var(--text);
+  background: #ffffff;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+}
+
+.import-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.import-help {
+  padding: 14px;
+  background: #f8fafb;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+}
+
+.import-help strong {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.import-help p {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.panel-header a,
+.link-button {
+  color: var(--accent-strong);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  min-height: auto;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.panel-header a:hover,
+.link-button:hover {
+  text-decoration: underline;
+}
+
+.import-result {
+  border-top: 1px solid var(--panel-border);
+}
+
+.import-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  padding: 18px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.import-summary article {
+  padding: 12px;
+  background: #f8fafb;
+  border: 1px solid var(--panel-border);
+  border-radius: 8px;
+}
+
+.import-summary span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.import-summary strong {
+  display: block;
+  margin-top: 5px;
+  font-size: 20px;
+}
+
+.import-messages {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.import-messages h4,
+.import-preview h4 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.import-messages ol {
+  margin: 0;
+  padding-left: 22px;
+}
+
+.import-messages li {
+  margin-bottom: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.import-error {
+  color: #9f1239;
+}
+
+.import-warning {
+  color: var(--warn);
+}
+
+.import-preview {
+  padding: 16px 18px 18px;
+}
+
 .lineage-legend {
   display: flex;
   gap: 8px;
@@ -525,6 +662,7 @@ pre {
 
   .toolbar,
   .summary-grid,
+  .import-layout,
   .understanding div {
     grid-template-columns: 1fr;
   }

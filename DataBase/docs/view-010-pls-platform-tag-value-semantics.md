@@ -25,8 +25,7 @@ platform + tag_type + leaf_label -> PLS layer + PLS dimension
 
 ## Current Scope
 
-Only Tmall and Douyin are included. Xiaohongshu is intentionally excluded.
-JD will be connected later.
+Tmall, Douyin, and JD are included. Xiaohongshu is intentionally excluded.
 
 ## Consumption Guidance
 

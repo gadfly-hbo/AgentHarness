@@ -6,6 +6,11 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import {
+  buildProfileMetricTemplateCsv,
+  importPlatformProfileTagMetricFiles,
+  importPlatformProfileTagMetrics,
+} from "../importers/platform_profile_tag_metrics_importer.mjs";
 
 const execFileAsync = promisify(execFile);
 const __filename = fileURLToPath(import.meta.url);
@@ -175,6 +180,38 @@ const semanticNotes = {
     nextLinks:
       "后续真实数据导入后，优先用这张 view 做渠道匹配、模型实验和画像卡片特征读取。",
   },
+  platform_profile_tag_metrics: {
+    purpose:
+      "承接三平台真实画像 CSV 导入后的标签指标长表，一行表示一个渠道对象命中的一个平台标签指标。",
+    productUse:
+      "用于把用户按模板整理好的天猫、抖音、京东画像数据写入 SQLite，并进入 PLS 语义展开和渠道特征聚合。",
+    nextLinks:
+      "通过真实画像导入页或 import_platform_profile_tag_metrics.mjs 写入；下游读取 v_platform_profile_tag_metric_semantics 和 v_platform_profile_channel_feature_matrix。",
+  },
+  v_platform_profile_tag_metric_semantics: {
+    purpose:
+      "把真实画像标签指标连接到平台标签目录和 PLS 三层九维语义，形成可解释的指标明细。",
+    productUse:
+      "用于排查某个渠道对象的真实画像指标如何映射到 PLS 维度，以及导入后做标签级解释。",
+    nextLinks:
+      "上游写入 platform_profile_tag_metrics；下游聚合到 v_platform_profile_channel_dimension_features。",
+  },
+  v_platform_profile_channel_dimension_features: {
+    purpose:
+      "按渠道对象、指标口径、时间窗口和 PLS 维度聚合真实画像标签指标。",
+    productUse:
+      "用于分析一个渠道对象在不同 PLS 维度上的真实画像强弱，同时保留 share、tgi、count 等指标口径隔离。",
+    nextLinks:
+      "下游进入 v_platform_profile_channel_feature_matrix，形成模型更容易消费的九维宽表。",
+  },
+  v_platform_profile_channel_feature_matrix: {
+    purpose:
+      "把真实画像维度特征透视成渠道对象九维宽表，并保留指标名、单位、时间窗口和批次。",
+    productUse:
+      "作为后续 PLS 渠道画像真实数据进入 ModelEvol、货渠匹配和画像卡片的第一版宽表入口。",
+    nextLinks:
+      "模型读取前应先筛选 metric_name 和 metric_unit，避免混用占比、TGI、人数等不同口径。",
+  },
 };
 
 const fieldNotes = {
@@ -232,6 +269,36 @@ async function main() {
 
       if (url.pathname === "/api/readme") {
         await sendJson(response, await readReadme());
+        return;
+      }
+
+      if (url.pathname === "/api/platform-profile-template") {
+        sendText(response, buildProfileMetricTemplateCsv(), "text/csv; charset=utf-8", {
+          "content-disposition":
+            'attachment; filename="platform_profile_tag_metrics_template.csv"; filename*=UTF-8\'\'platform_profile_tag_metrics_template.csv',
+        });
+        return;
+      }
+
+      if (url.pathname === "/api/platform-profile-import") {
+        if (request.method !== "POST") {
+          sendJson(response, { error: "Method not allowed" }, 405);
+          return;
+        }
+        const payload = await readJsonBody(request);
+        const result = Array.isArray(payload.files)
+          ? await importPlatformProfileTagMetricFiles({
+              files: payload.files,
+              dbPath,
+              apply: payload.apply === true,
+            })
+          : await importPlatformProfileTagMetrics({
+              csvText: payload.csvText,
+              sourceFileName: payload.fileName || "uploaded.csv",
+              dbPath,
+              apply: payload.apply === true,
+            });
+        await sendJson(response, result, result.errors.length > 0 ? 422 : 200);
         return;
       }
 
@@ -370,6 +437,29 @@ function sendJson(response, payload, status = 200) {
     "cache-control": "no-store",
   });
   response.end(JSON.stringify(payload));
+}
+
+function sendText(response, text, contentType, headers = {}) {
+  response.writeHead(200, {
+    "content-type": contentType,
+    "cache-control": "no-store",
+    ...headers,
+  });
+  response.end(text);
+}
+
+async function readJsonBody(request) {
+  const chunks = [];
+  let size = 0;
+  for await (const chunk of request) {
+    size += chunk.length;
+    if (size > 80 * 1024 * 1024) {
+      throw new Error("请求体超过 80MB，请拆分 CSV 后再导入。");
+    }
+    chunks.push(chunk);
+  }
+  const text = Buffer.concat(chunks).toString("utf8");
+  return text ? JSON.parse(text) : {};
 }
 
 function quoteIdentifier(value) {

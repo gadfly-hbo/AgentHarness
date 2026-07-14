@@ -13,6 +13,7 @@ const repoRoot = path.resolve(databaseRoot, "..");
 const dbPath = path.join(databaseRoot, "agentharness.sqlite");
 
 const now = "2026-07-13T00:00:00.000Z";
+const targetPlatforms = ["天猫", "抖音", "京东"];
 
 async function main() {
   const migrationPath = path.join(
@@ -25,7 +26,7 @@ async function main() {
   const rows = await sqliteJson(`
     SELECT id
     FROM platform_tag_catalog
-    WHERE platform IN ('天猫', '抖音')
+    WHERE platform IN (${targetPlatforms.map(sqlValue).join(", ")})
       AND status = 'active'
     ORDER BY platform, source_row;
   `);
@@ -49,7 +50,7 @@ VALUES (${sqlValue(row.catalogId)}, ${sqlValue(row.mappingId)});
 `),
     `
 DELETE FROM pls_tag_value_dimension_mappings
-WHERE platform IN ('天猫', '抖音')
+WHERE platform IN (${targetPlatforms.map(sqlValue).join(", ")})
   AND NOT EXISTS (
     SELECT 1
     FROM platform_tag_catalog catalog
@@ -99,7 +100,7 @@ JOIN tmp_pls_tag_value_mapping_ids tmp_ids
 JOIN pls_tag_type_dimension_mappings type_mapping
   ON type_mapping.platform = catalog.platform
   AND type_mapping.tag_type = catalog.tag_type
-WHERE catalog.platform IN ('天猫', '抖音')
+WHERE catalog.platform IN (${targetPlatforms.map(sqlValue).join(", ")})
   AND catalog.status = 'active'
   AND type_mapping.status = 'active'
   AND type_mapping.mapping_status = 'approved'

@@ -6,12 +6,13 @@
 mapped into the PLS model. This table is the ingestion foundation for aligning
 platform-specific labels into a unified PLS segmentation logic.
 
-The first import intentionally includes only:
+The current import includes:
 
 - Tmall
 - Douyin
+- JD
 
-Xiaohongshu is excluded by current product decision. JD will be connected later.
+Xiaohongshu is excluded by current product decision.
 
 ## Files
 
@@ -22,8 +23,10 @@ Xiaohongshu is excluded by current product decision. JD will be connected later.
 ## Source
 
 ```text
-/Users/huangbo/Downloads/三大平台标签/1. 天猫_标签类型_标签_20260201.csv
-/Users/huangbo/Downloads/三大平台标签/3. 抖音_标签类型_标签_20260201.csv
+DataBase/source_files/platform_tags/v0.1/1. 天猫_标签类型_标签_20260201.csv
+DataBase/source_files/platform_tags/v0.1/3. 抖音_标签类型_标签_20260201.csv
+DataBase/source_files/platform_tags/v0.1/4. 京东_标签类型_标签_20260714.csv
+DataBase/source_files/platform_tags/v0.1/5. 天猫_AI标签_服饰需求特征_20260714.csv
 ```
 
 ## Imported Data
@@ -31,10 +34,17 @@ Xiaohongshu is excluded by current product decision. JD will be connected later.
 Expected imported rows:
 
 ```text
-天猫: 3538
-抖音: 5895
-total: 9433
+天猫: 3573
+抖音: 5902
+京东: 227
+total: 9702
 ```
+
+`5. 天猫_AI标签_服饰需求特征_20260714.csv` 是用户补充的 AI 标签源，
+只保存标签值，原始占比不进入 `platform_tag_catalog.leaf_label`。
+
+抖音 `美妆行业特色人群` 来自实际可提取画像标签清洗文件：
+`DataBase/source_files/platform_profile_extracts/douyin/v0.1/101326115008_实际可提取画像标签_20260714.csv`。
 
 ## Role In The PLS Model
 

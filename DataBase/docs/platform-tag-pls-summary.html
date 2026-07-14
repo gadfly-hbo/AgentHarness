@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>三平台 PLS 标签分类汇总</title>
+  <style>
+    :root { color-scheme: light; --ink:#1d2433; --muted:#5f6b7a; --line:#d8dee8; --panel:#f7f9fc; --p:#2867b2; --l:#16805d; --s:#a45413; }
+    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif; color:var(--ink); background:#fff; }
+    header { padding:28px 36px 18px; border-bottom:1px solid var(--line); background:linear-gradient(180deg,#f9fbff 0%,#fff 100%); }
+    h1 { margin:0 0 10px; font-size:26px; letter-spacing:0; }
+    h2 { margin:34px 0 12px; font-size:22px; }
+    h3 { margin:22px 0 10px; font-size:16px; color:#2b3445; }
+    p { margin:6px 0; line-height:1.6; color:var(--muted); }
+    main { padding:0 36px 40px; }
+    .summary { display:grid; grid-template-columns:repeat(3,minmax(180px,1fr)); gap:12px; margin:18px 0 8px; max-width:920px; }
+    .card { border:1px solid var(--line); border-radius:8px; padding:14px 16px; background:var(--panel); }
+    .card strong { display:block; font-size:18px; margin-bottom:6px; }
+    .meta { color:var(--muted); font-size:13px; }
+    table { width:100%; border-collapse:collapse; table-layout:fixed; border:1px solid var(--line); margin-bottom:16px; }
+    th, td { border-bottom:1px solid var(--line); padding:9px 10px; vertical-align:top; text-align:left; line-height:1.45; word-break:break-word; }
+    th { background:#eef2f7; font-weight:700; color:#263244; }
+    tbody tr:nth-child(even) td { background:#fbfcfe; }
+    th:nth-child(1), td:nth-child(1) { width:52px; text-align:center; }
+    th:nth-child(2), td:nth-child(2) { width:148px; }
+    th:nth-child(3), td:nth-child(3) { width:300px; }
+    th:nth-child(4), td:nth-child(4) { width:78px; text-align:right; }
+    .num { font-variant-numeric:tabular-nums; color:#344054; }
+    .badge { display:inline-block; min-width:26px; border-radius:999px; color:#fff; font-weight:700; font-size:12px; padding:2px 6px; }
+    .badge-P { background:var(--p); } .badge-L { background:var(--l); } .badge-S { background:var(--s); }
+    .platform { break-before:page; }
+    .platform:first-of-type { break-before:auto; }
+    .note { background:#fff8e8; border:1px solid #f0d99c; border-radius:8px; padding:10px 12px; color:#614a10; margin:14px 0; }
+    @media print { header, main { padding-left:18px; padding-right:18px; } table { font-size:11px; } .platform { break-before:page; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>三平台 PLS 标签分类汇总</h1>
+    <p>天猫为最终确认的 40 个抽取标签；京东按库内全部已审批 tag_type 输出；抖音按实际可提取画像文件中的 25 个 tag_type 输出。</p>
+    <p class="meta">生成时间：2026-07-14 08:56:17 ｜ 数据库：DataBase/agentharness.sqlite</p>
+    <div class="summary">
+      
+        <div class="card">
+          <strong>天猫：40 个 tag_type</strong>
+          <div class="meta">模式：精选抽取</div>
+          <div class="meta">P 14 ｜ L 15 ｜ S 11</div>
+        </div>
+      
+        <div class="card">
+          <strong>京东：38 个 tag_type</strong>
+          <div class="meta">模式：全量分类</div>
+          <div class="meta">P 16 ｜ L 9 ｜ S 13</div>
+        </div>
+      
+        <div class="card">
+          <strong>抖音：25 个 tag_type</strong>
+          <div class="meta">模式：实际可提取</div>
+          <div class="meta">P 12 ｜ L 7 ｜ S 6</div>
+        </div>
+      
+    </div>
+    <div class="note">说明：AI标签_服饰需求特征为用户补充的天猫标签类型，源文件只保留标签值，不保留原始占比。抖音实际画像源文件的占比和 TGI 已忽略。</div>
+  </header>
+  <main>
+    
+      <section class="platform" id="天猫">
+        <h2>天猫｜精选抽取｜40 个 tag_type</h2>
+        
+      <section class="layer-block">
+        <h3>P层 静态人群底座（14 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>天猫 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>预测城市等级</td>
+                <td class="num">6</td>
+                <td>反映地域消费环境和可支配消费水位。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>预测年龄</td>
+                <td class="num">9</td>
+                <td>人群基础分层变量，影响类目、价格带和内容偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>预测性别</td>
+                <td class="num">2</td>
+                <td>基础画像变量，用于解释品类和风格偏好差异。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>88会员等级</td>
+                <td class="num">1</td>
+                <td>反映平台会员价值和高价值用户可能性。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>预测购买力</td>
+                <td class="num">5</td>
+                <td>概括用户整体消费能力，适合作为价格带判断底座。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>月均消费金额</td>
+                <td class="num">8</td>
+                <td>直接反映用户在天猫的消费水位。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>大快消行业-大快消策略人群</td>
+                <td class="num">9</td>
+                <td>反映日常消费品偏好，补足高频生活消费场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>服饰行业-大服饰策略人群</td>
+                <td class="num">6</td>
+                <td>反映服饰消费圈层和穿搭需求。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测家户类型</td>
+                <td class="num">9</td>
+                <td>反映家庭结构，影响家庭型、个人型消费决策。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测教育程度</td>
+                <td class="num">5</td>
+                <td>补充社会资产和消费心智判断。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测人生阶段</td>
+                <td class="num">4</td>
+                <td>反映生命周期阶段，影响母婴、家居、服饰等需求。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测是否有车</td>
+                <td class="num">2</td>
+                <td>反映资产状态和汽车、出行、家庭消费场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测职业</td>
+                <td class="num">14</td>
+                <td>解释消费场景、通勤需求和收入结构差异。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测住房状态</td>
+                <td class="num">2</td>
+                <td>反映资产状态和家居、家装、耐用品需求。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>L层 生活心智与人格（15 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>天猫 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>电视剧风格偏好</td>
+                <td class="num">31</td>
+                <td>反映长期内容偏好和情绪价值取向。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>电影风格偏好</td>
+                <td class="num">31</td>
+                <td>反映审美、情绪和叙事偏好，补充人格心智。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>内容类型偏好人群</td>
+                <td class="num">43</td>
+                <td>反映内容消费偏好，可辅助判断素材和表达方式。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>服饰行业-大服饰时尚度分层</td>
+                <td class="num">5</td>
+                <td>反映用户对潮流、风格和时尚表达的接受度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>家装行业-家居风格偏好</td>
+                <td class="num">8</td>
+                <td>反映生活审美、居家风格和空间偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>男装行业-男装风格偏好</td>
+                <td class="num">15</td>
+                <td>补充男性服饰总体风格偏好，避免风格标签只偏女装。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>男装行业-天猫男装风格-风格表达-气质</td>
+                <td class="num">12</td>
+                <td>反映男装气质表达，例如商务、休闲、成熟、潮流等。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>女装行业-天猫女装风格-风格表达-气质2.0</td>
+                <td class="num">13</td>
+                <td>女装风格表达核心标签，适合判断气质、审美和人格倾向。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>女装行业-天猫女装风格-风格市场-场合</td>
+                <td class="num">6</td>
+                <td>反映穿着场景，例如通勤、休闲、约会等，能解释生活场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>女装行业-天猫女装风格-风格市场-社会年龄</td>
+                <td class="num">5</td>
+                <td>反映女装风格对应的社会年龄与穿着定位。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>女装行业-天猫女装风格-风格元素-民族地域</td>
+                <td class="num">7</td>
+                <td>反映民族风、地域风格等审美元素，补充风格来源。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>AI标签_服饰需求特征</td>
+                <td class="num">35</td>
+                <td>反映服饰风格、版型、材质和气质表达需求。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>二级类目高偏好</td>
+                <td class="num">990</td>
+                <td>进一步细化购物兴趣，提升画像可解释性。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>天猫通用人群_生活方式</td>
+                <td class="num">13</td>
+                <td>作为生活方式总括标签，覆盖跨品类生活圈层。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>一级类目高偏好</td>
+                <td class="num">141</td>
+                <td>反映用户核心购物类目，是购物兴趣骨架。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>S层 转化与触达场景（11 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>天猫 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>个护行业-洗发水价格段偏好</td>
+                <td class="num">9</td>
+                <td>反映日常个护消费价格带，覆盖高频刚需消费。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>美妆行业-彩妆价格段偏好</td>
+                <td class="num">11</td>
+                <td>补充彩妆消费价格带，反映美妆预算和精致消费倾向。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>美妆行业-护肤品价格段偏好</td>
+                <td class="num">11</td>
+                <td>反映护肤消费价格带，可解释功效型消费预算。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>男装行业-男士羽绒服价格段偏好</td>
+                <td class="num">4</td>
+                <td>补充男性冬装核心品类价格带，和男装风格标签形成组合。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>女装行业-女装-短外套价格段偏好</td>
+                <td class="num">5</td>
+                <td>补充女装外套价格带，和女装风格标签形成组合。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>食品饮料行业-乳制品价格段偏好</td>
+                <td class="num">6</td>
+                <td>补充高频食品饮料价格带，反映日常消费品质偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>折扣敏感度</td>
+                <td class="num">3</td>
+                <td>直接反映用户对价格和优惠刺激的敏感程度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>月均购物频次偏好</td>
+                <td class="num">5</td>
+                <td>反映购买活跃度和复购/下单习惯。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>运动户外-跑步鞋功能偏好</td>
+                <td class="num">14</td>
+                <td>反映功能诉求，是商品选择和临门转化的重要条件。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>最近30天登录天数</td>
+                <td class="num">4</td>
+                <td>反映近期平台活跃度和触达机会。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>物理/数字环境</td>
+                <td>购物时间分布</td>
+                <td class="num">24</td>
+                <td>反映用户购物时间习惯，可用于触达时机判断。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      </section>
+    
+      <section class="platform" id="京东">
+        <h2>京东｜全量分类｜38 个 tag_type</h2>
+        
+      <section class="layer-block">
+        <h3>P层 静态人群底座（16 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>京东 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>常用收货省份</td>
+                <td class="num">11</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>城市线级</td>
+                <td class="num">6</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>年龄</td>
+                <td class="num">13</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>性别</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>用户年代</td>
+                <td class="num">6</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>购买力</td>
+                <td class="num">4</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>京享值</td>
+                <td class="num">4</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>学历</td>
+                <td class="num">6</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>用户月平均支付订单总额</td>
+                <td class="num">8</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>有车一族</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>有房人群</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>孩子预测年龄</td>
+                <td class="num">14</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>婚姻状况</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>十大靶群</td>
+                <td class="num">10</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>职业</td>
+                <td class="num">10</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>PLUS会员</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>L层 生活心智与人格（9 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>京东 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>全站新品偏好</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品牌、新品、品质或风格心智，有助于解释价值主张偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>宠物爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>户外运动爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>健身爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>科技产品爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>旅游爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>女装用户</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>体育运动爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>游戏爱好者</td>
+                <td class="num">3</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>S层 转化与触达场景（13 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>京东 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>促销敏感度</td>
+                <td class="num">20</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映价格、促销或利益刺激反应，有助于判断优惠敏感度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>秒杀商品偏好</td>
+                <td class="num">4</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映价格、促销或利益刺激反应，有助于判断优惠敏感度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>热衷使用优惠券用户</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映价格、促销或利益刺激反应，有助于判断优惠敏感度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>价格与利益应激</td>
+                <td>商品折扣率偏好</td>
+                <td class="num">7</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映价格、促销或利益刺激反应，有助于判断优惠敏感度。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>冲动购买</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>评价敏感度</td>
+                <td class="num">5</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>日均订单数量-近30天</td>
+                <td class="num">5</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>日均订单数量-近7天</td>
+                <td class="num">10</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>用户月支付订单数量</td>
+                <td class="num">11</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>物理/数字环境</td>
+                <td>客户当前使用手机品牌</td>
+                <td class="num">11</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映设备、时段或数字触达环境，可用于判断触达场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>物理/数字环境</td>
+                <td>无线端操作系统</td>
+                <td class="num">2</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映设备、时段或数字触达环境，可用于判断触达场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>物理/数字环境</td>
+                <td>无线端购物活跃时段-近7天</td>
+                <td class="num">6</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映设备、时段或数字触达环境，可用于判断触达场景。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>物理/数字环境</td>
+                <td>用户消费月份偏好</td>
+                <td class="num">12</td>
+                <td>该平台本次不做标签筛选，按全量标签类型纳入。该标签反映设备、时段或数字触达环境，可用于判断触达场景。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      </section>
+    
+      <section class="platform" id="抖音">
+        <h2>抖音｜实际可提取｜25 个 tag_type</h2>
+        
+      <section class="layer-block">
+        <h3>P层 静态人群底座（12 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>抖音 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>城市</td>
+                <td class="num">369</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>城市等级</td>
+                <td class="num">7</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>地域分布</td>
+                <td class="num">34</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>预测年龄段</td>
+                <td class="num">10</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>基础人口学</td>
+                <td>预测性别</td>
+                <td class="num">2</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签提供基础人口学坐标，用于解释人群结构和基础偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>电商消费金额</td>
+                <td class="num">10</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>手机价格</td>
+                <td class="num">11</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>社会资产与购买力</td>
+                <td>预测消费能力</td>
+                <td class="num">3</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映消费能力、资产或价格承受力，可作为商品价格带判断依据。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>八大消费群体</td>
+                <td class="num">8</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>美妆行业特色人群</td>
+                <td class="num">7</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测人生阶段</td>
+                <td class="num">3</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-P">P</span></td>
+                <td>综合身份聚类</td>
+                <td>预测职业</td>
+                <td class="num">6</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签刻画身份、家庭阶段、职业或人群簇，有助于理解用户所处生活角色。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>L层 生活心智与人格（7 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>抖音 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>抖音视频观看兴趣分类</td>
+                <td class="num">118</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映内容、视觉或审美偏好，可辅助判断素材表达和兴趣心智。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>抖音视频观看兴趣分类v2</td>
+                <td class="num">25</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映内容、视觉或审美偏好，可辅助判断素材表达和兴趣心智。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>头条用户阅读兴趣分类</td>
+                <td class="num">20</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映内容、视觉或审美偏好，可辅助判断素材表达和兴趣心智。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>内容与视觉心智</td>
+                <td>西瓜视频观看兴趣分类</td>
+                <td class="num">20</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映内容、视觉或审美偏好，可辅助判断素材表达和兴趣心智。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>电商品牌成交偏好</td>
+                <td class="num">1,109</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映品牌、新品、品质或风格心智，有助于解释价值主张偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>创新与品牌心智</td>
+                <td>手机品牌</td>
+                <td class="num">27</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映品牌、新品、品质或风格心智，有助于解释价值主张偏好。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-L">L</span></td>
+                <td>圈层生活方式</td>
+                <td>电商品类成交偏好</td>
+                <td class="num">1,115</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映品类、兴趣或生活方式圈层，是跨场景画像的重要补充。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      <section class="layer-block">
+        <h3>S层 转化与触达场景（6 个）</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>PLS</th>
+              <th>维度</th>
+              <th>抖音 tag_type</th>
+              <th>标签值数</th>
+              <th>为什么选这个标签</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>触点互动偏好</td>
+                <td class="num">63</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>电商消费频次</td>
+                <td class="num">10</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>抖音活跃用户</td>
+                <td class="num">2</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>火山活跃用户</td>
+                <td class="num">2</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>头条活跃用户</td>
+                <td class="num">2</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+              <tr>
+                <td><span class="badge badge-S">S</span></td>
+                <td>转化决策摩擦</td>
+                <td>西瓜活跃用户</td>
+                <td class="num">2</td>
+                <td>该标签来自抖音实际可提取画像文件。该标签反映购买频次、功能诉求、选择条件或临门转化阻力。</td>
+              </tr>
+            
+          </tbody>
+        </table>
+      </section>
+    
+      </section>
+    
+  </main>
+</body>
+</html>
