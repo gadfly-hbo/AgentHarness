@@ -42,6 +42,9 @@ DataBase/agentharness.sqlite
 - 已接入：天猫、抖音、京东。
 - 暂不接入：小红书。
 - 当前平台标签源文件版本：`DataBase/source_files/platform_tags/v0.1/`。
+- 当前三平台真实提取标签汇总版本：`DataBase/docs/platform-tag-pls-summary.html`，
+  其中天猫 44 个、京东 38 个、抖音 25 个 tag_type。该汇总的 PLS 分层以
+  `OntoBase/pls-ontology-business-calibration.md` 第 9 节为语义权威。
 - `AI标签_服饰需求特征` 是用户补充的天猫 AI 标签类型，源文件只保留标签值，不保留原始占比。
 - 抖音 HTML 汇总范围使用实际可提取画像标签：
   `DataBase/source_files/platform_profile_extracts/douyin/v0.1/`。
@@ -547,6 +550,7 @@ sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/024_validate_pl
 sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/025_validate_v_platform_profile_tag_metric_semantics.sql"
 sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/026_validate_v_platform_profile_channel_dimension_features.sql"
 sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/027_validate_v_platform_profile_channel_feature_matrix.sql"
+sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/028_validate_ontobase_pls_platform_tag_mapping_calibration.sql"
 ```
 
 ## 接入注意事项
@@ -557,4 +561,9 @@ sqlite3 DataBase/agentharness.sqlite ".read DataBase/validations/027_validate_v_
   `v_platform_profile_channel_feature_matrix` 作为第一版真实渠道画像特征入口。
 - 真实主体标签观测必须先写入 `profile_tag_observations`，不要绕过这张事实表。
 - 标签映射修正应保留在映射表中，不要散落在下游产品代码里。
+- OntoBase 明确确认的平台标签 PLS 分层校准，应同步到
+  `pls_tag_type_dimension_mappings` 和 `pls_tag_value_dimension_mappings`；
+  当前 2026-07-16 校准通过
+  `DataBase/migrations/028_sync_ontobase_pls_platform_tag_mapping_calibration.sql`
+  固化。
 - 数据库 view 应保持简单、透明、可审计；复杂模型变换应放在 ModelEvol 或后续明确的特征工程层。

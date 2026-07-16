@@ -34,6 +34,95 @@ AgentHarness 的长期架构是“四库一台”：
 
 当前第一期联合场景是 `PLS 渠道画像匹配项目`。该场景中，`DataBase` 可提供 PLS 表、view、真实画像指标和九维特征矩阵作为事实数据源；`OntoBase` 可提供 PLS 业务对象、维度语义、指标口径、匹配解释规则等业务语义。但这只是第一期联合契约，不改变四库一台的独立性。后续 `MemoryBase`、`KnowledgeBase`、`Console` 进入该场景时，也应通过显式联合契约加入。
 
+## Controller-Domain Development Architecture
+
+AgentHarness 采用 CDI（Controller-Domain Isolation，总控域隔离工程法）的“总控 + 域 agent”开发架构。
+
+### 固定角色路由
+
+| 角色 | CLI | 默认所有权 | 默认允许修改 |
+| --- | --- | --- | --- |
+| 总控 Controller | Codex | 全局上下文、任务拆解、联合契约、跨域身份、Console contract、审批、集成、验收、最终用户回复 | `AGENTS.md`、`CONTEXT.md`、`Orchestration.md`、`docs/` 中的共享索引/contract/ADR/controller notes，以及经审核后的集成改动 |
+| OntoBase 域 agent | Kilo Code | 业务对象、属性语义、关系、指标、规则、动作、语义映射和 source binding | `OntoBase/**` 及任务 brief 明确授权的 OntoBase 域文档 |
+| DataBase 域 agent | OpenCode | 事实数据、table/view、字段、migration、seed、importer、validation、数据库文档和血缘 | `DataBase/**` 及任务 brief 明确授权的 DataBase 域文档 |
+| KnowledgeBase 域 agent | Mimo Code | 文档、规范、外部资料、来源追溯、切片、索引和检索结构 | `KnowledgeBase/**` 及任务 brief 明确授权的 KnowledgeBase 域文档 |
+| MemoryBase 域 agent | Kimi Code | 经验、偏好、教训、记忆候选、可信度、冲突、晋升和生命周期 | `MemoryBase/**` 及任务 brief 明确授权的 MemoryBase 域文档 |
+| Console 域 agent | Antigravity CLI | 控制平面、用户界面、查看、触发、审批、治理、审计和跨库编排入口 | `Console/**` 及任务 brief 明确授权的 Console 域文档 |
+
+Antigravity CLI 是 `Console` 的固定域开发者，但不拥有四库语义或联合契约。Codex 继续作为 Console contract owner、跨域编排审批者和最终集成者。
+
+以上路由覆盖 AgentOps 的通用 domain→CLI 默认路由。AgentHarness Task Bus 任务必须显式设置 `assignee`，不得依赖工具自动猜测。
+
+### 总控权限
+
+Codex 负责：
+
+- 读取用户目标与现有证据，维护 `CONTEXT.md` 中的全局术语、域图、接口和不变量。
+- 把工作拆成有用户价值、可独立验收的域任务，并通过 `.agentops/tasks/` Task Bus 派发。
+- 编写或批准跨域 contract、稳定身份、数据流、错误与降级规则、兼容与迁移方案。
+- 审核域 agent handoff，确认范围、契约、验证、风险和跨域影响。
+- 只在 handoff 获批后组织集成；最终测试结论和用户回复只能由 Codex 给出。
+
+Codex 默认不代替域 agent 实现库内任务。只读诊断、controller-owned 文档、紧急且经用户授权的 hotfix 例外不受此限。
+
+### 域 agent 边界
+
+域 agent 必须：
+
+- 只领取分配给本 CLI 的 Task Bus 任务，只修改 `allowed_paths`。
+- 开始前读取 `AGENTS.md`、`CONTEXT.md`、`Orchestration.md`、本域 notes、任务 brief 和相关 contract。
+- 保持其他库为只读外部系统，通过 contract、adapter、API、文件或 view 消费，不直接耦合其内部存储。
+- 完成后提交结构化 handoff：完成项、文件、验证、contract drift、跨域影响、风险、未验证项和需要总控决定的问题。
+
+域 agent 不得：
+
+- 修改 `AGENTS.md`、`CONTEXT.md`、`Orchestration.md`、联合契约或 ADR，除非 controller brief 精确授权。
+- 修改另一库或其他域文件，或因为本域变化自动要求其他域同步实现。
+- 自行改变共享术语、跨库身份、API/schema/event shape 或产品消费契约。
+- 绕过 Codex 直接协调另一域实施；跨域诉求必须提交 `CONTRACT_CHANGE_REQUEST`。
+
+### 标准任务生命周期
+
+```text
+用户目标
+  -> Codex intake / structural confirmation
+  -> Codex 写 contract（跨域时必需）
+  -> Codex 创建 Task Bus 域任务
+  -> 域 agent claim / implement / validate
+  -> 域 agent handoff back
+  -> Codex review
+     -> approved：进入依赖任务或最终集成
+     -> changes_requested：原域 agent 修订
+     -> blocked：Codex 或用户处理阻塞
+  -> Codex integration validation
+  -> Codex 最终回复
+```
+
+跨域工作必须按依赖顺序分批。只有 contract 已明确、文件范围不重叠时才允许并行；同一 worktree 中默认串行，必要时为并行任务使用独立 branch/worktree。
+
+详细执行规则以 `CONTEXT.md`、`Orchestration.md`、`docs/contracts/` 和 `docs/templates/` 为准。
+
+### 跨域变更判定门槛
+
+Codex 在派发任务前，必须先把用户要求逐项分类为事实数据或数据结构、业务语义或本体映射、知识来源、经验记忆、Console 展示或编排、联合契约中的一种或多种变更。
+
+当同名标签、字段、对象或展示项出现在多个域时，必须分别检查各域现状并明确：
+
+- 哪个域是该内容的权威来源。
+- 各域中该内容当前是已存在、缺失，还是仅有展示但未建立权威记录。
+- 用户要求是新增、修改、删除，还是重新分类。
+- 稳定身份、source binding、输入输出字段或其他联合契约是否受影响。
+- 哪些域需要派发任务，哪些域明确不需要修改。
+
+不得仅因为 HTML 或报表变化、多个域存在同名字段或标签、一个域新增数据、一个域调整语义，或者用户使用“新增”“删除”“同步”等未明确域边界的表述，就自动推断其他域需要同步。
+
+涉及两个及以上域，或者权威来源不能立即确定时，Codex 必须先形成变更影响清单，再创建任务：
+
+| 变更项 | 权威域 | 当前状态 | 本次动作 | contract 是否受影响 | 需要派发的域 | 明确不修改的域 |
+| --- | --- | --- | --- | --- | --- | --- |
+
+每个受影响域必须创建独立 Task Bus 任务，不得通过一个域任务顺手修改另一个域。只有展示层单域变更且权威来源、读取契约和其他域不受影响时，才可省略完整清单，但仍须在 brief 中记录该判断。
+
 ## Structural Confirmation Gate
 
 AgentHarness 新建或实质调整持久化结构前，必须先完成与用户逐项交互的结构确认。该规则适用于四库一台各自的内部结构和跨库联合契约，特别包括：

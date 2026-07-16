@@ -40,6 +40,12 @@ The initial import inherits dimensions from the fully approved
 tag values with `mapping_method = 'manual'` if a value needs finer treatment than
 its parent tag type.
 
+When OntoBase recalibrates a tag type's PLS dimension, this table must be
+refreshed for the affected leaf-label rows so model-facing value mappings stay
+consistent with the approved tag type mapping. The 2026-07-16 OntoBase sync is
+captured in
+`DataBase/migrations/028_sync_ontobase_pls_platform_tag_mapping_calibration.sql`.
+
 ## Next Work
 
 Use this table as the consumption surface for PLS tag matching. If downstream

@@ -155,3 +155,22 @@ v_pls_product_fit_tag_semantics
 - 后续扩展对象：1 个，`Profile Tag Observation`。
 - 第一阶段读取模型：2 个，`Channel Dimension Feature`、`Channel Feature Matrix`。
 - 本轮对象分层已全部确认，可作为 P2 语义读取入口和 P3 联合契约范围设计的直接依据。
+
+## 9. 平台标签 PLS 分层校准
+
+本节记录用户对三平台标签分层的明确业务校准。这里的结论属于 OntoBase 语义层权威记录；DataBase 中的平台标签目录、映射 table 或 view 只能作为外部数据源绑定和投影，不反向决定 OntoBase 业务语义。
+
+| 平台 | tag_type | 原维度 | 校准后维度 | 业务原因 | 确认状态 |
+| --- | --- | --- | --- | --- | --- |
+| 京东 | `学历` | `P_PURCHASING_POWER` / 社会资产与购买力 | `P_IDENTITY_CLUSTER` / 综合身份聚类 | 学历首先描述教育背景和社会身份，不直接等同于实际消费能力。 | 用户明确确认 |
+| 京东 | `PLUS会员` | `P_IDENTITY_CLUSTER` / 综合身份聚类 | `P_PURCHASING_POWER` / 社会资产与购买力 | PLUS 会员身份反映平台高价值会员属性及持续消费能力。 | 用户明确确认 |
+| 天猫 | `预测是否有车` | `P_IDENTITY_CLUSTER` / 综合身份聚类 | `P_PURCHASING_POWER` / 社会资产与购买力 | 是否有车是资产持有与消费承载能力信号。 | 用户明确确认 |
+| 天猫 | `预测住房状态` | `P_IDENTITY_CLUSTER` / 综合身份聚类 | `P_PURCHASING_POWER` / 社会资产与购买力 | 住房状态是家庭资产与耐用品消费能力的重要基础变量。 | 用户明确确认 |
+| 抖音 | `手机品牌` | `L_INNOVATION_BRAND_MIND` / 创新与品牌心智 | `S_ENVIRONMENT` / 物理/数字环境 | 当前使用的手机品牌首先描述用户所处数字设备环境和触达条件。 | 用户明确确认 |
+| 天猫 | `预测用户身高` | `S_CONVERSION_FRICTION` / 转化决策摩擦 | `P_DEMOGRAPHICS` / 基础人口学 | 身高是稳定的生理属性，不是临时转化阻力。 | 用户明确确认 |
+| 天猫 | `预测用户体重` | `S_CONVERSION_FRICTION` / 转化决策摩擦 | `P_DEMOGRAPHICS` / 基础人口学 | 体重是稳定的生理属性；影响尺码只是后续应用。 | 用户明确确认 |
+| 天猫 | `预测用户星座` | `P_DEMOGRAPHICS` / 基础人口学 | `P_DEMOGRAPHICS` / 基础人口学 | 星座由出生日期派生，是稳定属性；标签本身不是星座兴趣或生活方式。 | 用户复核后确认保留 |
+| 天猫 | `天猫通用人群_消费意愿` | `P_IDENTITY_CLUSTER` / 综合身份聚类 | `L_INNOVATION_BRAND_MIND` / 创新与品牌心智 | 高端、品质、实用和经济取向描述长期消费理念与价值主张，不是平台综合身份。 | 用户明确确认 |
+| 天猫 | `预测使用的手机品牌` | `L_INNOVATION_BRAND_MIND` / 创新与品牌心智 | `S_ENVIRONMENT` / 物理/数字环境 | 当前使用的手机品牌描述硬件与数字触达环境，不等同于品牌忠诚。 | 用户明确确认 |
+
+天猫提取清单新增的 `预测用户身高`、`预测用户体重`、`预测用户星座`、`天猫通用人群_消费意愿`、`预测使用的手机品牌` 均为既有平台标签，不作为 OntoBase 新增对象处理；其中四项映射经本轮业务复核后调整，一项确认保留。

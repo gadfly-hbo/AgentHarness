@@ -17,6 +17,8 @@ platform_tag_catalog.tag_type -> pls_semantic_dimensions
 - Migration: `DataBase/migrations/006_create_pls_tag_type_dimension_mappings.sql`
 - Importer: `DataBase/importers/import_pls_tag_type_dimension_mappings.mjs`
 - Validation: `DataBase/validations/006_validate_pls_tag_type_dimension_mappings.sql`
+- OntoBase calibration sync:
+  `DataBase/migrations/028_sync_ontobase_pls_platform_tag_mapping_calibration.sql`
 
 ## Mapping Status
 
@@ -40,6 +42,11 @@ temperament expression, and high-spend style groups.
 The Douyin tag type `美妆行业特色人群` is approved into
 `P_IDENTITY_CLUSTER` because it describes beauty consumer personas such as
 拔草、格调、悦己、理性刚需 and 美潮文艺 groups.
+
+OntoBase is the semantic authority for business-calibrated PLS layer decisions.
+The 2026-07-16 calibration adjusts nine platform `tag_type` mappings, including
+Tmall height, weight, car, housing, consumption intention, phone brand, JD
+education, JD PLUS membership, and Douyin phone brand.
 
 ## Next Work
 

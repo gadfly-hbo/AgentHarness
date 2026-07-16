@@ -89,3 +89,32 @@ PLS 渠道画像匹配项目
 ```
 
 首期重点是让 `DataBase` 与 `OntoBase` 建立清晰协作，但这不改变四库一台的独立性。后续 `MemoryBase`、`KnowledgeBase`、`Console` 进入该场景时，也应通过显式联合契约加入，而不是变成某个库的附属模块。
+
+### PLS 的权威边界
+
+`PLS 渠道画像匹配项目`是 AgentHarness 第一个正式验证 `DataBase` 与 `OntoBase` 联合工作的项目。PLS 是外部消费项目和联合场景，不是第五个库，也不是 `DataBase` 与 `OntoBase` 的共享存储。
+
+- `DataBase` 是 PLS 事实数据、平台提取清单、实际提取结果和数据读取入口的权威来源。
+- `OntoBase` 是 PLS 业务对象、标签语义、PLS 分层、指标口径、映射关系和解释规则的权威来源。
+- `DataBase` 新增提取标签，不等于 `OntoBase` 新增语义对象；必须先检查 OntoBase 中该标签是否已经存在。
+- `OntoBase` 调整标签分层或解释语义，不自动要求 `DataBase` 修改表结构或事实数据。
+- HTML、报表和 Console 页面是消费或展示产物，除非联合契约另有明确声明，否则不成为事实数据或业务语义的权威来源。
+- 只有稳定身份、source binding、输入输出字段、读写入口或其他联合契约发生变化时，才需要 DataBase 与 OntoBase 跨域联动。
+- `KnowledgeBase`、`MemoryBase` 和 `Console` 后续加入 PLS 时，必须分别声明消费入口、权威边界和跨域身份对齐方式。
+
+当一个 PLS 变更同时提到标签、分层、提取表、HTML 或 Console 时，Codex 必须先按 `AGENTS.md` 的“跨域变更判定门槛”形成影响判断，再分别向受影响域派发任务。
+
+## 8. 开发控制权
+
+四库一台的运行架构与开发 agent 架构相互对应，但不混为一体：
+
+| 范围 | 开发 owner | 规则 |
+| --- | --- | --- |
+| 全局上下文、联合契约、Console contract、集成与验收 | Codex | 作为唯一总控维护共享语义和跨域变更顺序 |
+| `DataBase` | OpenCode | 只在 DataBase 域内实现事实数据和数据工程能力 |
+| `OntoBase` | Kilo Code | 只在 OntoBase 域内实现权威业务语义 |
+| `KnowledgeBase` | Mimo Code | 只在 KnowledgeBase 域内实现来源知识和检索能力 |
+| `MemoryBase` | Kimi Code | 只在 MemoryBase 域内实现经验记忆和生命周期 |
+| `Console` | Antigravity CLI | 只在 Console 域内实现控制平面、用户界面和编排入口 |
+
+一个域 agent 发现其他域需要变化时，只能向 Codex 提交 contract change request。Codex 先更新或批准联合契约，再创建受影响域的独立 Task Bus 任务。任何域都不能用直接修改另一域文件的方式完成跨域同步。

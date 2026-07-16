@@ -38,6 +38,35 @@ specialized capabilities:
 No base is the global parent of another base. Cross-base behavior must be
 declared through a joint contract for a specific product or project.
 
+## Controller-Domain Development
+
+AgentHarness 的开发控制面采用 CDI（Controller-Domain Isolation，总控域隔离工程法）：
+
+```text
+                         Codex Controller
+                context / contracts / review / integration
+                                  |
+              +-------------------+-------------------+
+              |                   |                   |
+       OpenCode              Kilo Code           Mimo Code          Kimi Code
+       DataBase              OntoBase            KnowledgeBase      MemoryBase
+              \                   |                   |                   /
+               +------------------+-------------------+------------------+
+                                  |
+                      explicit joint contracts
+                                  |
+                         Antigravity CLI
+                              Console
+                                  |
+                               products
+```
+
+Codex owns global terminology, joint contracts, Task Bus dispatch, Console contracts,
+integration review, and final acceptance. Domain agents own only their assigned
+domain and may not edit another domain or a shared contract without a
+controller-approved brief. Detailed rules live in `CONTEXT.md` and
+`Orchestration.md`.
+
 ## Module Responsibilities
 
 ### Console

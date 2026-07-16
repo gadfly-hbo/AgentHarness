@@ -115,6 +115,8 @@
 
 业务定义：平台标签到 PLS 语义维度的映射关系，包括标签类型级映射和标签值级映射。
 
+语义治理边界：具体平台标签归属哪个 PLS 维度，由 OntoBase 的业务校准记录决定。DataBase 中的 `pls_tag_type_dimension_mappings`、`pls_tag_value_dimension_mappings` 及相关 view 是首期外部数据源绑定或语义投影，不是 OntoBase 语义权威来源。当前人工校准覆盖见 `OntoBase/pls-ontology-business-calibration.md` 第 9 节。
+
 首期数据源：
 
 - `pls_tag_type_dimension_mappings`

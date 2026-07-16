@@ -16,6 +16,69 @@ const targetPlatforms = ["天猫", "抖音", "京东"];
 
 const approvedMappingsByPlatform = new Map([
   [
+    "天猫::预测用户身高",
+    [
+      "pls_dim_p_demographics",
+      "OntoBase业务校准：身高是稳定的生理属性，不是临时转化阻力。",
+    ],
+  ],
+  [
+    "天猫::预测用户体重",
+    [
+      "pls_dim_p_demographics",
+      "OntoBase业务校准：体重是稳定的生理属性；影响尺码只是后续应用。",
+    ],
+  ],
+  [
+    "天猫::预测是否有车",
+    [
+      "pls_dim_p_purchasing_power",
+      "OntoBase业务校准：是否有车是资产持有与消费承载能力信号。",
+    ],
+  ],
+  [
+    "天猫::预测住房状态",
+    [
+      "pls_dim_p_purchasing_power",
+      "OntoBase业务校准：住房状态是家庭资产与耐用品消费能力的重要基础变量。",
+    ],
+  ],
+  [
+    "天猫::天猫通用人群_消费意愿",
+    [
+      "pls_dim_l_innovation_brand_mind",
+      "OntoBase业务校准：高端、品质、实用和经济取向描述长期消费理念与价值主张，不是平台综合身份。",
+    ],
+  ],
+  [
+    "天猫::预测使用的手机品牌",
+    [
+      "pls_dim_s_environment",
+      "OntoBase业务校准：当前使用的手机品牌描述硬件与数字触达环境，不等同于品牌忠诚。",
+    ],
+  ],
+  [
+    "京东::学历",
+    [
+      "pls_dim_p_identity_cluster",
+      "OntoBase业务校准：学历首先描述教育背景和社会身份，不直接等同于实际消费能力。",
+    ],
+  ],
+  [
+    "京东::PLUS会员",
+    [
+      "pls_dim_p_purchasing_power",
+      "OntoBase业务校准：PLUS会员身份反映平台高价值会员属性及持续消费能力。",
+    ],
+  ],
+  [
+    "抖音::手机品牌",
+    [
+      "pls_dim_s_environment",
+      "OntoBase业务校准：当前使用的手机品牌首先描述用户所处数字设备环境和触达条件。",
+    ],
+  ],
+  [
     "天猫::AI标签_服饰需求特征",
     [
       "pls_dim_l_innovation_brand_mind",
@@ -25,7 +88,7 @@ const approvedMappingsByPlatform = new Map([
 ]);
 
 const jdApprovedMappings = new Map([
-  ["PLUS会员", ["pls_dim_p_identity_cluster", "京东会员身份标签，归入P层综合身份聚类。"]],
+  ["PLUS会员", ["pls_dim_p_purchasing_power", "PLUS会员身份反映平台高价值会员属性及持续消费能力。"]],
   ["京享值", ["pls_dim_p_purchasing_power", "京享值反映平台会员价值与消费资产水位，归入P层社会资产与购买力。"]],
   ["促销敏感度", ["pls_dim_s_price_incentive_response", "促销敏感度直接描述价格与权益刺激反应，归入S层价格与利益应激。"]],
   ["健身爱好者", ["pls_dim_l_lifestyle", "兴趣爱好类生活方式标签，归入L层圈层生活方式。"]],
@@ -35,7 +98,7 @@ const jdApprovedMappings = new Map([
   ["城市线级", ["pls_dim_p_demographics", "城市线级是基础地域人口属性，归入P层基础人口学。"]],
   ["女装用户", ["pls_dim_l_lifestyle", "女装品类用户标签描述品类生活偏好，归入L层圈层生活方式。"]],
   ["婚姻状况", ["pls_dim_p_identity_cluster", "婚姻状况描述家庭与身份阶段，归入P层综合身份聚类。"]],
-  ["学历", ["pls_dim_p_purchasing_power", "学历可作为社会资产和购买力判断的基础变量，归入P层社会资产与购买力。"]],
+  ["学历", ["pls_dim_p_identity_cluster", "学历首先描述教育背景和社会身份，不直接等同于实际消费能力。"]],
   ["孩子预测年龄", ["pls_dim_p_identity_cluster", "孩子年龄描述家庭生命周期和育儿阶段，归入P层综合身份聚类。"]],
   ["客户当前使用手机品牌", ["pls_dim_s_environment", "手机品牌是数字设备环境标签，归入S层物理/数字环境。"]],
   ["宠物爱好者", ["pls_dim_l_lifestyle", "宠物兴趣描述生活方式圈层，归入L层圈层生活方式。"]],

@@ -17,6 +17,19 @@ They are connected through explicit joint contracts for each external product
 or project. No base is modeled as the parent, storage backend, or required
 implementation layer of another base.
 
+## Development Actors
+
+| Actor | Role | Owned Domain |
+| --- | --- | --- |
+| Codex | Controller, contract owner, reviewer, integrator | Global context, Console contract, joint contracts |
+| OpenCode | Domain agent | `DataBase` |
+| Kilo Code | Domain agent | `OntoBase` |
+| Mimo Code | Domain agent | `KnowledgeBase` |
+| Kimi Code | Domain agent | `MemoryBase` |
+| Antigravity CLI | Domain agent | `Console` |
+
+Domain agents communicate through Codex, Task Bus handoffs, and explicit contracts. They do not directly coordinate cross-domain writes.
+
 ## Core Objects
 
 ### Agent
