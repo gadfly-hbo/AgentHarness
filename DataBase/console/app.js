@@ -121,6 +121,7 @@ const lineageSections = [
         nodes: [
           node("pls_audience_profiles", "table", "渠道人群画像"),
           node("pls_product_fit_profiles", "table", "渠道商品适配画像"),
+          node("v_pls_audience_profile_snapshots", "view", "人群画像快照 metadata"),
           node("v_pls_channel_profile_overview", "view", "渠道画像综合概览"),
         ],
       },
@@ -143,6 +144,8 @@ const lineageSections = [
       ["pls_channel_objects", "pls_channel_object_bindings"],
       ["pls_channel_objects", "pls_audience_profiles"],
       ["pls_channel_objects", "pls_product_fit_profiles"],
+      ["pls_channel_objects", "v_pls_audience_profile_snapshots"],
+      ["pls_audience_profiles", "v_pls_audience_profile_snapshots"],
       ["pls_channel_objects", "v_pls_channel_profile_overview"],
       ["pls_audience_profiles", "v_pls_channel_profile_overview"],
       ["pls_product_fit_profiles", "v_pls_channel_profile_overview"],

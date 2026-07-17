@@ -87,6 +87,7 @@ Current table notes:
 - `DataBase/docs/view-012-profile-tag-observation-semantics.md`
 - `DataBase/docs/view-013-subject-pls-dimension-features.md`
 - `DataBase/docs/view-014-subject-pls-feature-matrix.md`
+- `DataBase/docs/view-029-pls-audience-profile-snapshots.md`
 
 ## Schema Console
 
