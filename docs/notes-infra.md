@@ -25,7 +25,15 @@ Codex。
 - 现有历史变更可能同时修改 DataBase 与 OntoBase，后续必须按 contract change 拆分。
 - `.agentops/tasks/` 是否加入 `.gitignore` 尚未在本轮决定；Codex 不应静默修改。
 - 各 CLI 新会话必须重新读取项目控制面文件。
+- WorkPLS 正式画像对比的 AgentHarness 上游状态已分成两个 gate：`T0002` 已批准并释放
+  `v_workpls_dimension_evidence` schema/read-surface；`T0003` 已复核批准为数据 readiness
+  blocker，结论是当前真实 evidence 行数为 0、`platform_profile_tag_metrics` 为 0、`ws_demo`
+  只有 mock snapshot 且没有合法对比路径，现有 CSV 也不满足正式 metric 长表字段要求。这不是
+  WorkPLS formal Run gate release。
 
 ## 下一步
 
-下一项真实跨域需求使用本 CDI 流程创建首批 Task Bus 任务，并以 handoff/review 验证规则可执行性。
+- WorkPLS 已通过自身 `T0023-controller-record-agentharness-data-readiness-blocker`
+  记录 AgentHarness 数据 readiness blocker；AgentHarness 当前不需要再产出 WorkPLS 回执。
+- 后续如要释放正式 Run gate，必须先解决真实平台画像 metric 长表数据来源、导入与 readiness 验证，
+  不得使用 mock、旧 `dimension_score`、默认 unit/value 或不合规 CSV 绕过。
