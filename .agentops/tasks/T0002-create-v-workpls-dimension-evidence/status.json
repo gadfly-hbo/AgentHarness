@@ -1,0 +1,16 @@
+{
+  "id": "T0002",
+  "slug": "create-v-workpls-dimension-evidence",
+  "status": "approved",
+  "assignee": "opencode",
+  "domain": "database",
+  "controller": "codex",
+  "created_by": "codex",
+  "created_at": "2026-07-18T00:09:15.828Z",
+  "updated_at": "2026-07-18T00:28:34.864Z",
+  "base_ref": "e0944a0a40071e4ca9e5a8e7357b5208133b77d6",
+  "dirty_at_creation": true,
+  "batch": "workpls-harness-portrait-0.3.0",
+  "sequence": 1,
+  "domain_memory": "docs/notes-database.md"
+}

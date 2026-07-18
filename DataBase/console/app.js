@@ -194,6 +194,13 @@ const lineageSections = [
           node("v_platform_profile_channel_feature_matrix", "view", "真实渠道九维宽表"),
         ],
       },
+      {
+        title: "WorkPLS 证据",
+        nodes: [
+          node("v_pls_audience_profile_snapshots", "view", "人群画像快照 metadata"),
+          node("v_workpls_dimension_evidence", "view", "WorkPLS 维度证据读取面"),
+        ],
+      },
     ],
     edges: [
       ["真实画像导入页", "POST /api/platform-profile-import"],
@@ -211,6 +218,11 @@ const lineageSections = [
         "v_platform_profile_channel_dimension_features",
         "v_platform_profile_channel_feature_matrix",
       ],
+      [
+        "v_platform_profile_channel_dimension_features",
+        "v_workpls_dimension_evidence",
+      ],
+      ["v_pls_audience_profile_snapshots", "v_workpls_dimension_evidence"],
     ],
   },
   {
