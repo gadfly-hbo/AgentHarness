@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentHarness Console - Capability Workbench</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>AgentHarness</h2>
+                <span class="badge-prototype">Prototype Data</span>
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item active"><a href="#">Capability Workbench</a></li>
+                <li class="nav-item"><a href="#">DataBase</a></li>
+                <li class="nav-item"><a href="#">OntoBase</a></li>
+                <li class="nav-item"><a href="#">KnowledgeBase</a></li>
+                <li class="nav-item"><a href="#">MemoryBase</a></li>
+                <li class="nav-item"><a href="#">System Audit</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Capability Workbench</h1>
+                <div class="header-actions">
+                    <span class="environment-tag">Environment: Local Prototype</span>
+                </div>
+            </header>
+
+            <div class="workbench-grid">
+
+                <!-- Section 1: 四库一台能力地图 -->
+                <section class="panel panel-map">
+                    <div class="panel-header">
+                        <h3>四库一台能力地图 (Architecture Map)</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="architecture-map">
+                            <div class="map-node node-console">
+                                <div class="node-title">Console (控制台)</div>
+                                <div class="node-desc">编排 / 治理 / 审批 / 审计</div>
+                            </div>
+                            <div class="map-connectors">
+                                <div class="connector-line"></div>
+                            </div>
+                            <div class="map-bases">
+                                <div class="map-node node-base">
+                                    <div class="node-title">DataBase</div>
+                                    <div class="node-status status-active">Running</div>
+                                </div>
+                                <div class="map-node node-base">
+                                    <div class="node-title">OntoBase</div>
+                                    <div class="node-status status-active">Running</div>
+                                </div>
+                                <div class="map-node node-base">
+                                    <div class="node-title">KnowledgeBase</div>
+                                    <div class="node-status status-pending">Pending</div>
+                                </div>
+                                <div class="map-node node-base">
+                                    <div class="node-title">MemoryBase</div>
+                                    <div class="node-status status-pending">Pending</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid-row-2">
+                    <!-- Section 2: 当前 capability 列表 -->
+                    <section class="panel panel-capabilities">
+                        <div class="panel-header">
+                            <h3>Capability 列表</h3>
+                            <input type="text" placeholder="Search capabilities..." class="search-input" disabled>
+                        </div>
+                        <div class="panel-body table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Lifecycle</th>
+                                        <th>Module</th>
+                                        <th>Tier</th>
+                                        <th>Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="selected">
+                                        <td>PLS Capability Pack (Demo)</td>
+                                        <td><span class="status-tag tag-released">Released [Demo]</span></td>
+                                        <td>Core + Data</td>
+                                        <td>Enterprise (Draft)</td>
+                                        <td>DataBase, OntoBase</td>
+                                    </tr>
+                                    <tr>
+                                        <td>SQL Generator</td>
+                                        <td><span class="status-tag tag-evaluating">Evaluating</span></td>
+                                        <td>Tool</td>
+                                        <td>Paid</td>
+                                        <td>OntoBase</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Doc Searcher</td>
+                                        <td><span class="status-tag tag-draft">Draft</span></td>
+                                        <td>Knowledge</td>
+                                        <td>Core</td>
+                                        <td>KnowledgeBase</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Code Architect</td>
+                                        <td><span class="status-tag tag-prototype">Prototype</span></td>
+                                        <td>Skill</td>
+                                        <td>Core</td>
+                                        <td>MemoryBase</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Section 3: PLS Capability Pack 示例详情 -->
+                    <section class="panel panel-details">
+                        <div class="panel-header">
+                            <h3>Capability 详情: PLS Capability Pack</h3>
+                            <button class="btn btn-primary" disabled>Edit Contract</button>
+                        </div>
+                        <div class="panel-body">
+                            <div class="detail-group">
+                                <h4>组合价值 (Combined Value - Mock)</h4>
+                                <p class="text-secondary">提供 PLS 表、真实画像指标、九维特征矩阵，以及 PLS 业务对象、维度语义、指标口径等语义映射。支撑下游画像匹配场景。</p>
+                            </div>
+                            <div class="detail-group">
+                                <h4>依赖基础库 (Base Dependencies)</h4>
+                                <ul class="dependency-list">
+                                    <li><strong>DataBase:</strong> <span class="path">/v_workpls_dimension_evidence</span>, <span class="path">/platform_profile_tag_metrics</span> (Static demo: 0 rows)</li>
+                                    <li><strong>OntoBase:</strong> PLS 业务对象, 维度语义, 规则与动作 (Prototype)</li>
+                                </ul>
+                            </div>
+                            <div class="detail-group">
+                                <h4>访问与集成 (Access & Integration - Prototype Shape Only)</h4>
+                                <div class="integration-code">
+                                    <code>{
+  "pack_shape": "pls-capability-pack",
+  "contract_status": "not-final",
+  "runtime_status": "prototype-only"
+}</code>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Section 7: pi-xanthil asset migration boundary -->
+                <section class="panel panel-migration">
+                    <div class="panel-header">
+                        <div>
+                            <h3>pi-xanthil 资产迁移边界 (Migration Boundary)</h3>
+                            <p class="panel-kicker">Prototype planning view only; not a real migration scan.</p>
+                        </div>
+                        <span class="status-tag tag-prototype">Design Expression</span>
+                    </div>
+                    <div class="panel-body">
+                        <div class="migration-grid">
+                            <div class="migration-column migrate-to-harness">
+                                <div class="migration-column-header">
+                                    <span class="migration-label">Migrate to AgentHarness</span>
+                                    <span class="migration-role">后台能力开发 / 治理 / 实验 / 注册 / 分发</span>
+                                </div>
+                                <ul class="migration-list">
+                                    <li><code>harness-packs/</code> → AgentHarness Packages / Capability Packs</li>
+                                    <li><code>server/tools/registry.ts</code> 与 tools → Console Tool Registry / Tool Lifecycle</li>
+                                    <li>tool / skill 实验对比、治理、审计、策略 → Console 后台能力治理</li>
+                                    <li><code>onto-prompts</code>, <code>onto-validator</code>, <code>onto-export</code>, <code>onto-extract</code> → OntoBase</li>
+                                    <li><code>knowledge-retrieval.ts</code> 等知识检索能力 → KnowledgeBase</li>
+                                    <li>memory 维护、老化、去重、沉淀逻辑 → MemoryBase</li>
+                                </ul>
+                            </div>
+                            <div class="migration-column remain-in-host">
+                                <div class="migration-column-header">
+                                    <span class="migration-label">Remain in pi-xanthil</span>
+                                    <span class="migration-role">上层产品应用 / 安装 / 使用 / 用户反馈</span>
+                                </div>
+                                <ul class="migration-list">
+                                    <li>面向最终用户的产品 UI 与业务任务入口</li>
+                                    <li>workspace、session、业务流程、安装和使用入口</li>
+                                    <li>skill 生成、tool 使用和前端反馈闭环</li>
+                                    <li>与 pi-xanthil 产品体验强绑定的交互、配置和运行时编排</li>
+                                </ul>
+                            </div>
+                            <div class="migration-column contract-boundary">
+                                <div class="migration-column-header">
+                                    <span class="migration-label">Contract / adapter boundary</span>
+                                    <span class="migration-role">权威 contract 与产品 adapter 分离</span>
+                                </div>
+                                <p class="text-secondary">建议由 AgentHarness 逐步权威维护 <code>agentharness-port.ts</code> 的 canonical contract；pi-xanthil 保留 adapter/client，并通过显式消费契约接入能力。</p>
+                                <div class="boundary-note">Console 是 AgentHarness 的控制平面，不是 pi-xanthil 内部页面；它负责能力后台治理，pi-xanthil 负责产品侧使用体验。</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <div class="grid-row-3">
+                    <!-- Section 4: 实验与评估状态 -->
+                    <section class="panel panel-eval">
+                        <div class="panel-header">
+                            <h3>实验与评估 (Eval)</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="stat-card">
+                                <div class="stat-label">Active Experiments</div>
+                                <div class="stat-value">3</div>
+                            </div>
+                            <ul class="status-list">
+                                <li>SQL Generator: <span class="text-amber">Validation running</span></li>
+                                <li>Doc Searcher: <span class="text-gray">Pending design</span></li>
+                            </ul>
+                            <button class="btn btn-secondary mt-3" disabled>View Dashboard</button>
+                        </div>
+                    </section>
+
+                    <!-- Section 5: 发布与分发状态 -->
+                    <section class="panel panel-release">
+                        <div class="panel-header">
+                            <h3>发布与分发 (Release & Dist)</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="stat-card">
+                                <div class="stat-label">Prototype Version Placeholder</div>
+                                <div class="stat-value">not-final</div>
+                            </div>
+                            <ul class="status-list">
+                                <li>PLS Capability Pack: <span class="text-green">Distributed [Demo]</span></li>
+                                <li>Code Architect: <span class="text-gray">Blocked (Security - Mock)</span></li>
+                            </ul>
+                            <div class="audit-signal mt-2">Audit: <span class="text-green">Passed [Demo]</span></div>
+                        </div>
+                    </section>
+
+                    <!-- Section 6: pi-xanthil 消费状态 -->
+                    <section class="panel panel-consumption">
+                        <div class="panel-header">
+                            <h3>pi-xanthil 消费 (Host Consumption)</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="host-info">
+                                <strong>Host:</strong> pi-xanthil production env (Simulated)
+                            </div>
+                            <ul class="consumption-list mt-3">
+                                <li class="status-installed">
+                                    <span class="pkg-name">PLS Pack</span>
+                                    <span class="pkg-status">Installed [Demo]</span>
+                                </li>
+                                <li class="status-upgrade">
+                                    <span class="pkg-name">Analytics Core</span>
+                                    <span class="pkg-status">Available Upgrade [Demo]</span>
+                                </li>
+                                <li class="status-not-purchased">
+                                    <span class="pkg-name">Enterprise Security</span>
+                                    <span class="pkg-status">Not Purchased (Draft)</span>
+                                </li>
+                            </ul>
+                            <div class="feedback-loop mt-2">
+                                <small class="text-secondary">Feedback loop: placeholder only; no real host telemetry connected</small>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+            </div>
+        </main>
+    </div>
+    <script src="js/app.js"></script>
+</body>
+</html>

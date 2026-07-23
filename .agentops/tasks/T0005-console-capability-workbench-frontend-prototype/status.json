@@ -1,0 +1,15 @@
+{
+  "id": "T0005",
+  "slug": "console-capability-workbench-frontend-prototype",
+  "status": "approved",
+  "assignee": "antigravity",
+  "domain": "console",
+  "controller": "codex",
+  "created_by": "codex",
+  "created_at": "2026-07-22T23:05:55.108Z",
+  "updated_at": "2026-07-22T23:45:55.261Z",
+  "base_ref": "ede3ec4919c2a54b14e11e2553a74dacd5a7bf8e",
+  "dirty_at_creation": true,
+  "batch": "agentharness-console-capability-workbench",
+  "sequence": 1
+}

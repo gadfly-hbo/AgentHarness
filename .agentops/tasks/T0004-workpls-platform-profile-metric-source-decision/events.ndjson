@@ -1,3 +1,0 @@
-{"timestamp":"2026-07-18T11:46:01.172Z","type":"task_created","task_id":"T0004","actor":"codex","resulting_status":"queued","note":"worktree was dirty at task creation"}
-{"timestamp":"2026-07-18T11:59:41.897Z","type":"task_claimed","task_id":"T0004","actor":"opencode","resulting_status":"running"}
-{"timestamp":"2026-07-18T12:01:45.193Z","type":"handoff_submitted","task_id":"T0004","actor":"opencode","resulting_status":"blocked"}

@@ -1,0 +1,18 @@
+{
+  "id": "T0006",
+  "slug": "console-capability-workbench-visual-validation",
+  "status": "approved",
+  "assignee": "qwen",
+  "domain": "validation",
+  "controller": "codex",
+  "created_by": "codex",
+  "created_at": "2026-07-22T23:06:03.001Z",
+  "updated_at": "2026-07-22T23:58:18.187Z",
+  "base_ref": "ede3ec4919c2a54b14e11e2553a74dacd5a7bf8e",
+  "dirty_at_creation": true,
+  "batch": "agentharness-console-capability-workbench",
+  "sequence": 2,
+  "depends_on": [
+    "T0005"
+  ]
+}

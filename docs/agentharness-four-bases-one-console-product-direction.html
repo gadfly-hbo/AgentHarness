@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AgentHarness 四库一台产品方向大纲</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f3ed;
+      --paper: #fffdf7;
+      --ink: #1d2522;
+      --muted: #5f6863;
+      --line: #d8d2c4;
+      --accent: #0f6f68;
+      --accent-2: #ad5d2a;
+      --soft: #e7efe9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #f5f3ed 0%, #ece7dc 52%, #e4ebe5 100%);
+      color: var(--ink);
+      font-family: "Songti SC", "Noto Serif CJK SC", Georgia, serif;
+      line-height: 1.72;
+    }
+
+    main {
+      width: min(1080px, calc(100% - 40px));
+      margin: 48px auto;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 24px 70px rgba(29, 37, 34, 0.12);
+    }
+
+    header {
+      padding: 48px 56px 32px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(15, 111, 104, 0.12), transparent 60%),
+        var(--paper);
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    section {
+      padding: 34px 56px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-child {
+      border-bottom: 0;
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      color: var(--accent);
+      font-size: 24px;
+      line-height: 1.28;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    .statement {
+      padding: 20px 22px;
+      border-left: 5px solid var(--accent);
+      background: var(--soft);
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .module {
+      padding: 18px 18px 16px;
+      border: 1px solid var(--line);
+      background: #fffaf0;
+    }
+
+    .module h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      color: var(--accent-2);
+    }
+
+    .module p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    ol,
+    ul {
+      margin: 0;
+      padding-left: 24px;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .flow div {
+      padding: 13px 16px;
+      border: 1px solid var(--line);
+      background: #fbf8ef;
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 14px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      color: var(--accent);
+    }
+
+    code {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      font-size: 0.92em;
+      color: #28423f;
+    }
+
+    @media (max-width: 760px) {
+      main {
+        width: min(100% - 24px, 1080px);
+        margin: 20px auto;
+      }
+
+      header,
+      section {
+        padding: 26px 22px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>AgentHarness 四库一台产品方向大纲</h1>
+      <p class="subtitle">目标不是同时建设五个并列 demo，而是把 AgentHarness 建成可被 pi-xanthil 消费、可授权、可发布、可商业化的后台能力中台。</p>
+    </header>
+
+    <section>
+      <h2>核心结论</h2>
+      <p class="statement">先建设 <code>Console + Capability Registry + Package / Release / License / Audit</code> 这条平台主干，再用 <code>PLS</code> 做第一条真实业务纵切，优先商业化 <code>DataBase / OntoBase / KnowledgeBase</code>，最后把 <code>MemoryBase</code> 做成跨产品经验沉淀和能力进化闭环。</p>
+    </section>
+
+    <section>
+      <h2>第一步：先定共同骨架</h2>
+      <p>先补齐一份 <code>Harness Consumption Contract</code>，明确外部产品如何消费 AgentHarness，而不是一开始陷入各库内部表结构。</p>
+      <ul>
+        <li><code>Capability</code>：能力模块，例如 <code>database.pls-profile</code>、<code>ontobase.pls-ontology</code>、<code>knowledgebase.industry-docs</code>。</li>
+        <li><code>Package</code>：可发布、可安装、可授权的交付单元。</li>
+        <li><code>Contract</code>：产品消费接口。</li>
+        <li><code>License</code>：客户是否购买、是否可用、是否降级。</li>
+        <li><code>Release</code>：版本、变更记录、兼容性。</li>
+        <li><code>Audit</code>：谁安装、谁调用、谁修改、谁批准。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>五个模块的权威边界</h2>
+      <div class="grid">
+        <div class="module">
+          <h3>DataBase</h3>
+          <p>权威：事实数据、表、view、字段、指标、血缘、数据质量。</p>
+        </div>
+        <div class="module">
+          <h3>OntoBase</h3>
+          <p>权威：业务对象、属性、关系、口径、规则、语义解释。</p>
+        </div>
+        <div class="module">
+          <h3>KnowledgeBase</h3>
+          <p>权威：文档、资料、切片、来源、索引、知识引用。</p>
+        </div>
+        <div class="module">
+          <h3>MemoryBase</h3>
+          <p>权威：经验、偏好、反馈、长期记忆、晋升与遗忘生命周期。</p>
+        </div>
+        <div class="module">
+          <h3>Console</h3>
+          <p>权威：开发、实验、治理、审批、发布、分发、审计。</p>
+        </div>
+      </div>
+      <p style="margin-top: 18px;">关键原则：<code>Console</code> 是控制平面，不是四库的宿主。四库各自独立，<code>Console</code> 只通过显式 contract 编排它们。</p>
+    </section>
+
+    <section>
+      <h2>建设优先级</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>优先级</th>
+            <th>建设内容</th>
+            <th>原因</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>P0</code></td>
+            <td><code>Console</code> 骨架、<code>Capability Registry</code>、<code>Release / Distribution</code></td>
+            <td>没有控制平面，四库会各自长成项目；有控制平面，四库才会变成平台。</td>
+          </tr>
+          <tr>
+            <td><code>P1</code></td>
+            <td><code>DataBase</code>、<code>OntoBase</code>、<code>KnowledgeBase</code></td>
+            <td>这三库最容易被客户理解和采购，适合作为企业增强模块。</td>
+          </tr>
+          <tr>
+            <td><code>P2</code></td>
+            <td><code>MemoryBase</code></td>
+            <td>先服务内部反馈闭环和跨产品经验沉淀，再逐步变成商业增强能力。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>用 pi-xanthil 做第一个 Host</h2>
+      <p>第一期不要抽象到“支持所有产品”，直接以 <code>pi-xanthil</code> 为第一个消费方，打通真实闭环。</p>
+      <div class="flow">
+        <div>AgentHarness 开发能力</div>
+        <div>AgentHarness 实验评估</div>
+        <div>AgentHarness 审批发布</div>
+        <div>分发到 pi-xanthil</div>
+        <div>pi-xanthil 安装并在前端供用户使用</div>
+        <div>用户行为和反馈回流</div>
+        <div>AgentHarness 进入下一版能力迭代</div>
+      </div>
+    </section>
+
+    <section>
+      <h2>四阶段路线</h2>
+      <ol>
+        <li><code>Stage 0: Platform Skeleton</code>：建设 <code>Console + Capability Registry + Package / Release / License / Audit</code> 的最小平台骨架。</li>
+        <li><code>Stage 1: PLS Vertical Slice</code>：用现有 <code>PLS</code> 场景贯穿 <code>DataBase + OntoBase + KnowledgeBase + Console</code>，做出一个能被 pi-xanthil 安装和使用的能力包。</li>
+        <li><code>Stage 2: Commercial Modules</code>：把 <code>DataBase</code>、<code>OntoBase</code>、<code>KnowledgeBase</code> 做成可单独购买、可组合购买的 enterprise modules。</li>
+        <li><code>Stage 3: MemoryBase Closed Loop</code>：把 pi-xanthil 的用户反馈、agent 行为、tool / skill 使用效果回流到 <code>MemoryBase</code>，形成长期优化资产。</li>
+      </ol>
+    </section>
+
+    <section>
+      <h2>pi-xanthil 资产迁移判断</h2>
+      <p><code>AgentHarness</code> 不应从零建设，而应以 <code>pi-xanthil</code> 已有骨架为母体，做能力治理层外拆。迁移方式不是复制目录，而是把治理权、能力定义、评估发布、行业包和长期资产迁到 <code>AgentHarness</code>；把用户体验、工作区运行、安装启用和前端应用留在 <code>pi-xanthil</code>。</p>
+      <table>
+        <thead>
+          <tr>
+            <th>pi-xanthil 资产</th>
+            <th>建议归属</th>
+            <th>处理方式</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>harness-packs/</code></td>
+            <td><code>AgentHarness Packages / CapabilityPacks</code></td>
+            <td>最适合直接迁移，作为行业能力包、商业化能力包和安装包标准的母体。</td>
+          </tr>
+          <tr>
+            <td><code>server/tools/registry.ts</code> 与 <code>server/tools/*</code></td>
+            <td><code>AgentHarness Console / Tool Registry</code></td>
+            <td>迁移 tool manifest、注册制、风险声明、输出契约和评估治理；pi-xanthil 保留运行网关。</td>
+          </tr>
+          <tr>
+            <td><code>skill / tool evaluation</code>、<code>tool-policy</code>、<code>harness-audit</code></td>
+            <td><code>AgentHarness Console</code></td>
+            <td>这些属于开发、实验、治理、审批、发布、审计能力，不应长期留在产品侧作为权威。</td>
+          </tr>
+          <tr>
+            <td><code>onto-prompts</code>、<code>onto-validator</code>、<code>onto-export</code>、<code>onto-extract</code></td>
+            <td><code>OntoBase</code></td>
+            <td>抽出本体校验、导出、抽取、source binding 和版本治理；pi-xanthil 保留展示和应用。</td>
+          </tr>
+          <tr>
+            <td><code>knowledge-retrieval.ts</code></td>
+            <td><code>KnowledgeBase</code></td>
+            <td>复用 tokenizer、BM25、doc/chunk ranking；不要硬搬 workspace DB 绑定。</td>
+          </tr>
+          <tr>
+            <td><code>memory-maintenance</code>、<code>memory-aging</code>、<code>memory-dedup</code>、<code>memory-consolidation</code></td>
+            <td><code>MemoryBase</code></td>
+            <td>迁移治理、评估、老化、晋升、冲突处理；pi-xanthil 保留 runtime injection。</td>
+          </tr>
+          <tr>
+            <td><code>agentharness-port.ts</code></td>
+            <td><code>AgentHarness canonical contract</code></td>
+            <td>从 pi-xanthil 反向迁为 AgentHarness 权威 contract；pi-xanthil 保留 client / adapter。</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>pi-xanthil 保留范围</h2>
+      <p>四库一台独立后，<code>pi-xanthil</code> 应弱化为产品 Host，而不是继续作为四库一台的权威来源。</p>
+      <ul>
+        <li><code>web/src/App.tsx</code>、<code>web/src/tabs/*</code>、<code>ChatPane</code>、<code>BusinessRequirementPane</code>、<code>AnalysisProjectsPane</code> 保留在产品侧。</li>
+        <li><code>workspace</code>、<code>session</code>、<code>.pi/skills</code> 安装路径和用户前台四模块继续属于 pi-xanthil。</li>
+        <li><code>/api/extraction-tools/:id/run</code> 可以保留为产品运行入口，但 tool 的权威定义、评估和发布应迁到 AgentHarness。</li>
+        <li>pi-xanthil 后续定位为：产品 Host、工作区 Host、用户交互 Host、AgentHarness capability 的安装与运行 Host。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>迁移开工顺序</h2>
+      <ol>
+        <li>先建 <code>AgentHarness Capability Contract</code>，把 pi 现有 <code>agentharness-port.ts</code> 升级成 AgentHarness 权威 contract。</li>
+        <li>迁移 <code>harness-packs</code>，形成 AgentHarness 的行业能力包和商业能力包标准。</li>
+        <li>迁移 <code>Tool / Skill Registry + Eval</code>，优先建立 Console 的治理价值。</li>
+        <li>迁移 <code>OntoBase</code> 能力核，先处理 <code>onto-prompts</code>、<code>onto-validator</code>、<code>onto-export</code>，再处理持久化结构。</li>
+        <li>迁移 <code>KnowledgeBase</code> 检索核，抽算法和契约，不硬搬 pi 的 workspace 数据库。</li>
+        <li>迁移 <code>MemoryBase</code> 治理核，抽治理、评估、老化、晋升；pi 保留运行时注入。</li>
+        <li>让 pi-xanthil 切换为消费方，逐步拿掉本地权威实现。</li>
+      </ol>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{"timestamp":"2026-07-22T23:06:03.001Z","type":"task_created","task_id":"T0006","actor":"codex","resulting_status":"queued","note":"worktree was dirty at task creation"}
+{"timestamp":"2026-07-22T23:48:23.408Z","type":"task_claimed","task_id":"T0006","actor":"qwen","resulting_status":"running"}
+{"timestamp":"2026-07-22T23:57:06.393Z","type":"handoff_submitted","task_id":"T0006","actor":"qwen","resulting_status":"handoff_ready"}
+{"timestamp":"2026-07-22T23:58:18.187Z","type":"review_decision","task_id":"T0006","actor":"codex","resulting_status":"approved","note":"批准验证 handoff：Qwen 完成只读验证并识别关键缺口。注意此批准仅接受验证结论，不代表原型可进入后端；进入后端前需补 pi-xanthil 迁移候选/保留资产展示并重生成当前版本截图。"}
