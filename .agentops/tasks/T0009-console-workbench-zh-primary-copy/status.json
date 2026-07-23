@@ -1,0 +1,24 @@
+{
+  "id": "T0009",
+  "slug": "console-workbench-zh-primary-copy",
+  "status": "approved",
+  "assignee": "kilo",
+  "domain": "console-ui",
+  "controller": "codex",
+  "created_by": "codex",
+  "created_at": "2026-07-23T04:33:26.225Z",
+  "updated_at": "2026-07-23T04:42:49.556Z",
+  "base_ref": "87a7fa7babdf41f205064385db6f450f01be76ac",
+  "dirty_at_creation": true,
+  "framework_registration": {
+    "mode": "structured",
+    "product": "agentharness",
+    "version": 1
+  },
+  "batch": "agentharness-console-workbench-product-ui-redesign",
+  "sequence": 2,
+  "depends_on": [
+    "T0008"
+  ],
+  "domain_memory": "agentops/memory/kilo-frontend.md"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "T0011",
+  "slug": "console-workbench-pi-xanthil-experience-validation",
+  "status": "approved",
+  "assignee": "qwen",
+  "domain": "validation",
+  "controller": "codex",
+  "created_by": "codex",
+  "created_at": "2026-07-23T04:52:36.624Z",
+  "updated_at": "2026-07-23T22:42:20.580Z",
+  "base_ref": "87a7fa7babdf41f205064385db6f450f01be76ac",
+  "dirty_at_creation": true,
+  "framework_registration": {
+    "mode": "structured",
+    "product": "agentharness",
+    "version": 1
+  },
+  "batch": "agentharness-console-workbench-product-ui-redesign",
+  "sequence": 4,
+  "depends_on": [
+    "T0010"
+  ]
+}
