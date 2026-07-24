@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         hostBadge.textContent = 'fail closed';
         setBadgeClass(hostBadge, 'badge-amber');
         hostStack.innerHTML = '<div class="host-step blocked"><strong>停止</strong><span>未读取 registry，不能推断 Host 状态。</span></div>';
-        dependencyStack.innerHTML = '<div class="dependency-item blocked"><strong>未读取</strong><span>未从 Readiness ReadModel 获得 Base-level observations。</span></div>';
+        dependencyStack.innerHTML = '<div class="dependency-item blocked"><strong>未读取</strong><span>未从四库 owner outputs 获得 Base-level 聚合状态。</span></div>';
     }
 
     function renderPack(pack, isSnapshotMode) {
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedLifecycle.textContent = lifecycle[0];
         setBadgeClass(selectedLifecycle, lifecycle[1]);
         packIdentity.textContent = pack.identity.packId + ' · ' + pack.identity.shortName + ' · ' + pack.identity.version;
-        baseStatus.textContent = readyBases.length + ' / ' + pack.dependencies.bases.length + ' 个 Base-level 依赖已就绪（Readiness ReadModel）';
+        baseStatus.textContent = readyBases.length + ' / ' + pack.dependencies.bases.length + ' 个 Base-level 依赖已就绪（四库 owner outputs 聚合）';
         evalStatus.textContent = labelFor(readinessLabels, pack.readiness.evaluationStatus) + ' · ' + pack.readiness.lastCheckedAt;
         releaseStatus.textContent = '发布 ' + labelFor(stateLabels, pack.status.releaseReadiness) + ' · 分发 ' + labelFor(stateLabels, pack.status.distributionReadiness);
         hostStatus.textContent = pack.hostConsumer.hostName + ' adapter ' + labelFor(stateLabels, pack.hostConsumer.adapterState);
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sourceKind.textContent = pack.provenance.sourceKind;
         checklistCount.textContent = readyBases.length + ' / ' + pack.dependencies.bases.length + ' 已就绪';
         lifecycleList.innerHTML = pack.dependencies.bases
-            .map(function (base) { return '<li class="' + statusClass(base.state) + '">' + escapeHtml(base.base) + '：' + escapeHtml(labelFor(stateLabels, base.state)) + ' · <em>Readiness ReadModel observation</em> · ' + escapeHtml(base.note) + '</li>'; })
+            .map(function (base) { return '<li class="' + statusClass(base.state) + '">' + escapeHtml(base.base) + '：' + escapeHtml(labelFor(stateLabels, base.state)) + ' · <em>owner output 聚合</em> · ' + escapeHtml(base.note) + '</li>'; })
             .join('');
         sourceList.innerHTML = pack.provenance.sourceRefs
             .map(function (ref) { return '<li><strong>' + escapeHtml(ref.label) + '</strong><span>' + escapeHtml(ref.path) + ' · ' + escapeHtml(ref.note) + '</span></li>'; })
@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
             ['Adapter', pack.hostConsumer.adapterState, '保持模拟，不修改 pi-xanthil']
         ].map(function (item) { return '<div class="host-step ' + statusClass(item[1]) + '"><strong>' + item[0] + '</strong><span>' + escapeHtml(labelFor(stateLabels, item[1])) + ' · ' + escapeHtml(item[2]) + '</span></div>'; }).join('');
         dependencyStack.innerHTML = pack.dependencies.bases
-            .map(function (base) { return '<div class="dependency-item ' + statusClass(base.state) + '"><strong>' + escapeHtml(base.base) + '</strong><span>' + escapeHtml(labelFor(stateLabels, base.state)) + ' · Readiness ReadModel observation · ' + escapeHtml(base.note) + '</span></div>'; })
+            .map(function (base) { return '<div class="dependency-item ' + statusClass(base.state) + '"><strong>' + escapeHtml(base.base) + '</strong><span>' + escapeHtml(labelFor(stateLabels, base.state)) + ' · owner output 聚合 · ' + escapeHtml(base.note) + '</span></div>'; })
             .join('');
     }
 

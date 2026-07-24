@@ -119,7 +119,7 @@
                             <div class="status-card">
                                 <span>四库依赖状态</span>
                                 <strong id="base-status">加载中</strong>
-                                <small>来自 Readiness ReadModel 的 Base-level observation，由 backend readiness observations 派生；不展示 table、file、endpoint 或内部路径。</small>
+                                <small>来自四库 owner outputs 的只读聚合；Console 不写回四库，不展示 table、file、endpoint 或内部路径。</small>
                             </div>
                             <div class="status-card">
                                 <span>实验状态</span>
@@ -174,7 +174,7 @@
                         <div class="section-grid">
                             <section class="mini-section">
                                 <div class="section-title-row">
-                                <h4>Base-level dependencies（Readiness ReadModel）</h4>
+                                <h4>Base-level dependencies（四库 owner outputs 聚合）</h4>
                                 <span id="checklist-count">加载中</span>
                             </div>
                             <ol class="checklist" id="lifecycle-list">
@@ -239,8 +239,8 @@
 
                     <section class="panel inspector-panel">
                         <div class="panel-heading compact-heading">
-                            <h3>四库依赖（Readiness ReadModel）</h3>
-                            <span class="badge badge-gray">Base-level observation</span>
+                            <h3>四库依赖（owner outputs 聚合）</h3>
+                            <span class="badge badge-gray">只读聚合</span>
                         </div>
                         <div id="dependency-stack" class="dependency-stack">
                             <div class="dependency-item blocked"><strong>加载中</strong><span>等待 registry dependencies.bases。</span></div>

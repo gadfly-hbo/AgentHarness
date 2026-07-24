@@ -25,10 +25,10 @@
         },
         dependencies: {
             bases: [
-                { base: 'DataBase', state: 'ready', note: 'PLS tables and metric evidence' },
-                { base: 'OntoBase', state: 'ready', note: 'PLS dimension semantics and rules' },
-                { base: 'KnowledgeBase', state: 'pending', note: 'Industry reference materials pending integration' },
-                { base: 'MemoryBase', state: 'pending', note: 'User feedback loop pending integration' }
+                { base: 'DataBase', state: 'ready', note: 'PLS 表结构与指标证据已就绪' },
+                { base: 'OntoBase', state: 'ready', note: 'PLS 维度语义与规则已就绪' },
+                { base: 'KnowledgeBase', state: 'pending', note: '行业参考资料待集成' },
+                { base: 'MemoryBase', state: 'pending', note: '用户反馈回路待集成' }
             ]
         },
         hostConsumer: {
