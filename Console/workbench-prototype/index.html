@@ -14,7 +14,7 @@
                 <div class="brand-mark">AH</div>
                 <div>
                     <h1>AgentHarness</h1>
-                    <span class="demo-pill">原型演示数据</span>
+                    <span class="demo-pill">Registry 只读视图</span>
                 </div>
             </div>
             <nav class="nav-list">
@@ -28,22 +28,22 @@
             </nav>
             <div class="sidebar-note">
                 <span>边界</span>
-                Console 管理能力生命周期；pi-xanthil 保留产品侧使用入口。
+                    Console 展示 Capability Registry 只读快照；pi-xanthil 保留产品侧使用入口。
             </div>
         </aside>
 
         <main class="main-surface">
             <header class="topbar">
                 <div>
-                    <p class="eyebrow">能力工作台 · pi-xanthil Host 后台</p>
+                    <p class="eyebrow">AgentHarness Console / Capability Workbench</p>
                     <h2>
                         <span class="title-primary">管理能力就绪度</span>
                         <span class="title-secondary">主机分发</span>
                     </h2>
                 </div>
                 <div class="topbar-status" aria-label="原型环境">
-                    <span>本地静态原型</span>
-                    <strong>未连接后端</strong>
+                    <span>Capability Registry</span>
+                    <strong id="registry-state" class="badge badge-gray">加载中</strong>
                 </div>
             </header>
 
@@ -52,18 +52,18 @@
                     <section class="workspace-strip panel" aria-label="当前工作区概览">
                         <div>
                             <span>当前工作区</span>
-                            <strong>pi-xanthil capability staging</strong>
-                            <small>静态原型：用于对齐后台能力治理体验，不接管 pi-xanthil 用户分析流程。</small>
+                            <strong>Capability Registry 只读视图</strong>
+                            <small id="registry-message">正在通过 HTTP API 读取 Capability Registry。</small>
                         </div>
                         <div>
                             <span>当前能力包</span>
-                            <strong>PLS Capability Pack</strong>
-                            <small>authority: AgentHarness · consumer: pi-xanthil Host</small>
+                            <strong id="workspace-pack">加载中</strong>
+                            <small id="workspace-pack-meta">等待 registry client 返回能力包身份。</small>
                         </div>
                         <div>
                             <span>阻塞原因</span>
-                            <strong>Host adapter 未真实接入</strong>
-                            <small>可演示 eval / release / distribution readiness，不写入真实 registry。</small>
+                            <strong id="workspace-blocking">加载中</strong>
+                            <small id="workspace-blocking-meta">真实 evaluation / release / distribution 均未接入。</small>
                         </div>
                     </section>
 
@@ -75,17 +75,13 @@
                         <label class="filter-field">
                             <span>模块</span>
                             <select aria-label="模块筛选">
-                                <option>全部模块</option>
-                                <option selected>四库支撑</option>
-                                <option>工具能力</option>
+                                <option selected>Capability Registry</option>
                             </select>
                         </label>
                         <label class="filter-field">
                             <span>生命周期</span>
                             <select aria-label="生命周期筛选">
-                                <option>全部状态</option>
-                                <option selected>可操作</option>
-                                <option>受阻</option>
+                                <option selected>只读 registry 项</option>
                             </select>
                         </label>
                     </div>
@@ -96,51 +92,15 @@
                                 <p class="eyebrow">当前工作区</p>
                                 <h3>能力列表</h3>
                             </div>
-                            <span class="count-chip">4 个演示项</span>
+                            <span id="capability-count" class="count-chip">加载中</span>
                         </div>
-                        <div class="capability-table" role="table" aria-label="能力列表">
+                        <div class="capability-table" role="table" aria-label="能力列表" id="capability-table-body">
                             <div class="table-row table-head" role="row">
                                 <span>名称</span>
                                 <span>生命周期</span>
                                 <span>就绪度</span>
                                 <span>Host</span>
                             </div>
-                            <button class="table-row selected" type="button" data-capability="pls" role="row" aria-pressed="true">
-                                <span>
-                                    <strong>PLS Capability Pack</strong>
-                                    <small>DataBase + OntoBase 证据能力包</small>
-                                </span>
-                                <span class="badge badge-blue">可评估</span>
-                                <span>3 / 4 项通过</span>
-                                <span>pi-xanthil 待接入</span>
-                            </button>
-                            <button class="table-row" type="button" data-capability="sql" role="row" aria-pressed="false">
-                                <span>
-                                    <strong>SQL Generator</strong>
-                                    <small>Tool Registry 候选能力</small>
-                                </span>
-                                <span class="badge badge-amber">评估中</span>
-                                <span>2 / 4 项通过</span>
-                                <span>未分发</span>
-                            </button>
-                            <button class="table-row" type="button" data-capability="doc" role="row" aria-pressed="false">
-                                <span>
-                                    <strong>Doc Searcher</strong>
-                                    <small>Knowledge 检索原型</small>
-                                </span>
-                                <span class="badge badge-gray">草稿</span>
-                                <span>1 / 4 项通过</span>
-                                <span>无 Host 目标</span>
-                            </button>
-                            <button class="table-row" type="button" data-capability="architect" role="row" aria-pressed="false">
-                                <span>
-                                    <strong>Code Architect</strong>
-                                    <small>Memory 辅助 Skill 概念</small>
-                                </span>
-                                <span class="badge badge-gray">受阻</span>
-                                <span>1 / 4 项通过</span>
-                                <span>安全审核中</span>
-                            </button>
                         </div>
                     </div>
 
@@ -148,32 +108,43 @@
                         <div class="object-header">
                             <div>
                                 <p class="eyebrow">当前能力</p>
-                                <h3 id="selected-title">PLS Capability Pack</h3>
-                                <p id="selected-summary">用于管理 PLS 能力包（Capability Pack）评估、发布与 pi-xanthil 分发的静态原型。</p>
+                                <h3 id="selected-title">Capability Registry 加载中</h3>
+                                <p id="selected-summary">页面默认通过 HTTP API 读取能力包数据；snapshot 仅用于显式开发模式。</p>
+                                <p id="pack-identity" class="identity-line">等待 packId / shortName / version。</p>
                             </div>
                             <span id="selected-lifecycle" class="badge badge-blue">可评估</span>
                         </div>
 
                         <div class="status-grid">
                             <div class="status-card">
-                                <span>四库依赖</span>
-                                <strong id="base-status">DataBase + OntoBase 已就绪</strong>
-                                <small>KnowledgeBase 与 MemoryBase 为后续扩展点。</small>
+                                <span>四库依赖状态</span>
+                                <strong id="base-status">加载中</strong>
+                                <small>来自 Readiness ReadModel 的 Base-level observation，由 backend readiness observations 派生；不展示 table、file、endpoint 或内部路径。</small>
                             </div>
                             <div class="status-card">
                                 <span>实验状态</span>
-                                <strong id="eval-status">上次评估通过但有提醒</strong>
-                                <small>仅为原型结果；没有真实运行记录。</small>
+                                <strong id="eval-status">加载中</strong>
+                                <small>仅展示 registry readiness；没有真实运行记录。</small>
                             </div>
                             <div class="status-card">
                                 <span>发布状态</span>
-                                <strong id="release-status">准备发布受阻</strong>
-                                <small>需先完成本次演示评估。</small>
+                                <strong id="release-status">加载中</strong>
+                                <small>真实 release / artifact / license 未接入。</small>
                             </div>
                             <div class="status-card">
                                 <span>Host 消费状态</span>
-                                <strong id="host-status">pi-xanthil adapter 待确认</strong>
+                                <strong id="host-status">加载中</strong>
                                 <small>Host 安装为模拟状态，并未真实扫描。</small>
+                            </div>
+                            <div class="status-card">
+                                <span>Data boundary</span>
+                                <strong id="data-boundary">加载中</strong>
+                                <small>必须保持 demo_only，避免误解为生产或商业授权数据。</small>
+                            </div>
+                            <div class="status-card">
+                                <span>Provenance</span>
+                                <strong id="source-kind">加载中</strong>
+                                <small>来源来自 T0012 read-only registry seam。</small>
                             </div>
                         </div>
 
@@ -203,35 +174,21 @@
                         <div class="section-grid">
                             <section class="mini-section">
                                 <div class="section-title-row">
-                                    <h4>生命周期检查</h4>
-                                    <span id="checklist-count">3 / 4 已完成</span>
-                                </div>
-                                <ol class="checklist" id="lifecycle-list">
-                                    <li class="done">来源证据已映射</li>
-                                    <li class="done">OntoBase 语义已挂接</li>
-                                    <li class="done">已有演示评估结果</li>
-                                    <li class="blocked">发布包尚未准备</li>
-                                </ol>
-                            </section>
-                            <section class="mini-section boundary-panel">
+                                <h4>Base-level dependencies（Readiness ReadModel）</h4>
+                                <span id="checklist-count">加载中</span>
+                            </div>
+                            <ol class="checklist" id="lifecycle-list">
+                                <li class="blocked">等待 registry client 返回依赖列表</li>
+                            </ol>
+                        </section>
+                        <section class="mini-section boundary-panel">
                                 <div class="section-title-row">
-                                    <h4>迁移边界</h4>
-                                    <span>规划视图</span>
+                                    <h4>Provenance / dataBoundary</h4>
+                                    <span>只读来源</span>
                                 </div>
-                                <div class="boundary-grid">
-                                    <div>
-                                        <strong>迁入 AgentHarness</strong>
-                                        <p>能力包、Registry 生命周期、评估、治理、审计、OntoBase 语义、KnowledgeBase 检索、MemoryBase 生命周期。</p>
-                                    </div>
-                                    <div>
-                                        <strong>保留在 pi-xanthil</strong>
-                                        <p>产品 UI、workspace/session 流程、安装使用入口、用户反馈闭环、Host 侧运行时组合。</p>
-                                    </div>
-                                    <div>
-                                        <strong>Contract / adapter 边界</strong>
-                                        <p>AgentHarness 维护 canonical capability contract；pi-xanthil 保留 adapter/client 消费逻辑。</p>
-                                    </div>
-                                </div>
+                                <ol class="source-list" id="source-list">
+                                    <li>等待 registry sourceRefs</li>
+                                </ol>
                             </section>
                         </div>
                     </article>
@@ -242,57 +199,51 @@
                         <div class="panel-heading">
                             <div>
                                 <p class="eyebrow">操作</p>
-                                <h3>PLS Capability Pack</h3>
+                                <h3 id="action-title">Capability Pack</h3>
                             </div>
                             <span id="action-state" class="badge badge-amber">待评估</span>
                         </div>
                         <div class="action-stack">
                             <button id="run-eval" class="action-button primary" type="button">
                                 <span>运行评估</span>
-                                <small>模拟 pending 到 success 的反馈</small>
+                                <small>未接入：仅模拟前端 feedback</small>
                             </button>
                             <button id="prepare-release" class="action-button" type="button" disabled aria-describedby="release-reason">
                                 <span>准备发布</span>
-                                <small id="release-reason">需先完成当前评估</small>
+                                <small id="release-reason">未接入：需后续 release 任务</small>
                             </button>
                             <button id="distribute" class="action-button" type="button" disabled aria-describedby="dist-reason">
                                 <span>分发到 pi-xanthil</span>
-                                <small id="dist-reason">需先准备发布包</small>
+                                <small id="dist-reason">未接入：需后续 Host adapter 任务</small>
                             </button>
                             <button id="open-audit" class="action-button" type="button">
                                 <span>打开审计</span>
-                                <small>查看下方紧凑审计证据</small>
+                                <small>模拟：查看下方静态证据</small>
                             </button>
                         </div>
-                        <div id="action-feedback" class="feedback-box" role="status">可执行原型操作；不会调用真实后端。</div>
+                        <div id="action-feedback" class="feedback-box" role="status">等待 registry 状态；不会调用真实后端。</div>
                     </section>
 
                     <section class="panel host-panel">
                         <div class="panel-heading compact-heading">
                             <div>
                                 <p class="eyebrow">Host consumer</p>
-                                <h3>pi-xanthil Host</h3>
+                                <h3 id="host-title">Host consumer</h3>
                             </div>
-                            <span class="badge badge-amber">模拟受阻</span>
+                            <span id="host-badge" class="badge badge-amber">加载中</span>
                         </div>
-                        <div class="host-stack">
-                            <div class="host-step done"><strong>安装</strong><span>Host 目标已在演示工作区登记</span></div>
-                            <div class="host-step done"><strong>使用</strong><span>仅呈现消费入口，不承接用户分析工单</span></div>
-                            <div class="host-step pending"><strong>反馈</strong><span>等待 Host adapter 回传真实使用信号</span></div>
-                            <div class="host-step blocked"><strong>升级 / 受阻</strong><span>真实 distribution registry 尚未接入</span></div>
+                        <div id="host-stack" class="host-stack">
+                            <div class="host-step blocked"><strong>加载中</strong><span>等待 registry hostConsumer。</span></div>
                         </div>
                     </section>
 
                     <section class="panel inspector-panel">
                         <div class="panel-heading compact-heading">
-                            <h3>四库依赖</h3>
-                            <span class="badge badge-gray">演示</span>
+                            <h3>四库依赖（Readiness ReadModel）</h3>
+                            <span class="badge badge-gray">Base-level observation</span>
                         </div>
-                        <div class="dependency-stack">
-                            <div class="dependency-item ready"><strong>DataBase</strong><span>PLS 表与指标证据</span></div>
-                            <div class="dependency-item ready"><strong>OntoBase</strong><span>维度语义与规则</span></div>
-                            <div class="dependency-item pending"><strong>KnowledgeBase</strong><span>可选的文档检索能力</span></div>
-                            <div class="dependency-item pending"><strong>MemoryBase</strong><span>可选的生命周期学习</span></div>
+                        <div id="dependency-stack" class="dependency-stack">
+                            <div class="dependency-item blocked"><strong>加载中</strong><span>等待 registry dependencies.bases。</span></div>
                         </div>
                     </section>
 
@@ -302,9 +253,9 @@
                             <button id="audit-toggle" class="link-button" type="button">显示详情</button>
                         </div>
                         <ol class="audit-list">
-                            <li><span>11:08</span> 已在能力工作台选择 PLS 能力包。</li>
-                            <li><span>11:10</span> 已记录评估提醒：发布前需要刷新评估。</li>
-                            <li class="audit-extra" hidden><span>11:12</span> 已按规划视图复核迁移边界。</li>
+                            <li><span>11:08</span> 已通过 HTTP API 加载 Capability Registry 数据。</li>
+                            <li><span>11:10</span> 已确认 dataBoundary 仅为 demo_only。</li>
+                            <li class="audit-extra" hidden><span>11:12</span> install / release / distribution / license / audit 真实动作均未接入。</li>
                             <li class="audit-extra" hidden><span>11:13</span> Host 分发仍为模拟状态且保持受阻。</li>
                         </ol>
                     </section>
@@ -312,6 +263,7 @@
             </section>
         </main>
     </div>
+    <script src="js/registry-client.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

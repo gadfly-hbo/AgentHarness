@@ -1,0 +1,27 @@
+[
+  {
+    "base": "KnowledgeBase",
+    "packId": "agentharness.pack.pls-reference",
+    "state": "pending",
+    "reason": "KnowledgeBase 域当前为空，尚未具备 PLS reference pack 的最低消费条件：无文档、规范、外部资料、引用材料、检索索引或来源追溯入口。",
+    "checkedAt": "2026-07-24T12:00:00Z",
+    "evidenceRefs": [
+      {
+        "label": "KnowledgeBase 域笔记",
+        "path": "docs/notes-knowledgebase.md",
+        "note": "定义 KnowledgeBase 的 owner、职责边界、强制验证和跨域出口，确认当前域定位但未见实际知识材料。"
+      },
+      {
+        "label": "Four Bases One Console Contract",
+        "path": "docs/four-bases-one-console-contract.md",
+        "note": "确认 KnowledgeBase 为四库之一，负责文档、规范、外部资料、引用材料、检索索引和来源追溯。"
+      },
+      {
+        "label": "KnowledgeBase 目录",
+        "path": "KnowledgeBase/",
+        "note": "当前目录为空，无可用知识文件、索引或规范入口。"
+      }
+    ],
+    "producer": "knowledgebase"
+  }
+]

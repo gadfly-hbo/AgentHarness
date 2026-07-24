@@ -1,0 +1,32 @@
+[
+  {
+    "base": "OntoBase",
+    "packId": "agentharness.pack.pls-reference",
+    "state": "ready",
+    "reason": "OntoBase 已具备 PLS reference capability pack 的最低消费条件：领域模型、PLS 本体清单、业务校准和建设方案均已就位，首期 17 个核心 ObjectType 和业务语义已确认。",
+    "checkedAt": "2026-07-24T19:17:31+08:00",
+    "evidenceRefs": [
+      {
+        "label": "OntoBase 领域模型与 PLS 首期协作契约",
+        "path": "OntoBase/ontobase-domain-model.md",
+        "note": "定义 OntoBase 独立业务语义层定位、与 DataBase 的首期协作分工和第一版核心概念。"
+      },
+      {
+        "label": "PLS Ontology Inventory v0.1",
+        "path": "OntoBase/pls-ontology-inventory.md",
+        "note": "PLS 渠道画像匹配本体的第一版清单，包含 17 个核心 ObjectType、属性语义、关系和指标。"
+      },
+      {
+        "label": "PLS Ontology Business Calibration v0.1",
+        "path": "OntoBase/pls-ontology-business-calibration.md",
+        "note": "P1.1 业务实体校准结果，确认对象处理结论和回写要求，作为进入 P2 前的依据。"
+      },
+      {
+        "label": "PLS OntoBase 建设方案",
+        "path": "OntoBase/pls-ontobase-construction-plan.md",
+        "note": "OntoBase 第一根承重梁建设方案，明确建设目标、原则和首期闭环链路。"
+      }
+    ],
+    "producer": "ontobase"
+  }
+]

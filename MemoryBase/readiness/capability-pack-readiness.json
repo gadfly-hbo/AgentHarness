@@ -1,0 +1,27 @@
+[
+  {
+    "base": "MemoryBase",
+    "packId": "agentharness.pack.pls-reference",
+    "state": "pending",
+    "reason": "MemoryBase 已有通用记忆与候选记忆 schema、来源和生命周期样例，但当前仅有 agentharness.phase1 通用记录，尚无可复核的 PLS 专属记忆对象、来源绑定或消费入口，未满足 PLS reference pack 的最低消费条件。",
+    "checkedAt": "2026-07-24T12:20:20Z",
+    "evidenceRefs": [
+      {
+        "label": "Memory 对象 schema",
+        "path": "MemoryBase/schema/memory.schema.json",
+        "note": "定义 Memory 对象、来源候选引用、状态生命周期和 supersede 关系；当前未定义或证明 PLS 专属消费条件。"
+      },
+      {
+        "label": "当前已批准记忆",
+        "path": "MemoryBase/memories/memories.jsonl",
+        "note": "当前仅包含一条 agentharness.phase1 通用记忆，没有 PLS scope 或 PLS reference pack 消费记录。"
+      },
+      {
+        "label": "当前记忆候选",
+        "path": "MemoryBase/candidates/memory-candidates.jsonl",
+        "note": "当前仅包含对应的 agentharness.phase1 approved candidate，没有 PLS 来源绑定或 PLS 专属候选。"
+      }
+    ],
+    "producer": "memorybase"
+  }
+]

@@ -1,0 +1,37 @@
+[
+  {
+    "base": "DataBase",
+    "packId": "agentharness.pack.pls-reference",
+    "state": "ready",
+    "reason": "DataBase 已具备 PLS reference capability pack 的最低消费条件：schema、migration、validation、consumption guide 和血缘展示均已就位，且由域内 AGENTS.md 维护同步规则。",
+    "checkedAt": "2026-07-24T00:00:00Z",
+    "evidenceRefs": [
+      {
+        "label": "DataBase 域工作规则",
+        "path": "DataBase/AGENTS.md",
+        "note": "定义 schema、migration、validation、消费指南和血缘的同步维护规则。"
+      },
+      {
+        "label": "PLS 消费指南",
+        "path": "DataBase/docs/pls-consumption-guide.md",
+        "note": "记录推荐读写入口、字段语义和注意事项，是 Console 和其他 Base 消费 DataBase 的权威入口。"
+      },
+      {
+        "label": "核心 migration",
+        "path": "DataBase/migrations/001_create_entities.sql",
+        "note": "DataBase 首张 migration，建立 entities 基础结构。"
+      },
+      {
+        "label": "核心 validation",
+        "path": "DataBase/validations/001_validate_entities.sql",
+        "note": "对 entities 结构的真实数据断言，不以脚本退出代替数据校验。"
+      },
+      {
+        "label": "DataBase 索引",
+        "path": "DataBase/README.md",
+        "note": "保存当前运行命令和目录索引，可作为 readiness 复核入口。"
+      }
+    ],
+    "producer": "database"
+  }
+]
